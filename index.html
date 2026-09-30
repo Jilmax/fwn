@@ -7,9 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e3b32;--bg2:#0a2c25;--ink:#f6efe2;--muted:#b9cbc3;--gold:#d4ad5b;--rose:#e9b8b4;--card:rgba(255,255,255,.06);--line:rgba(212,173,91,.35);
+:root{--bg:#0e3b32;--bg2:#136207;--ink:#f6efe2;--muted:#b9cbc3;--gold:#d4ad5b;--rose:#e9b8b4;--card:rgba(255,255,255,.06);--line:rgba(212,173,91,.35);
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#0e3b32;--bg2:#0a2c25}}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#0e3b32;--bg2:#136207}}
 html{scroll-behavior:smooth;scroll-padding-top:70px;height:auto}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden}
@@ -230,7 +230,7 @@ tickCd();setInterval(tickCd,1000);
 /* calendar link */
 const f=d=>d.toISOString().replace(/[-:]|\.\d{3}/g,"");
 $("#cal").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Faris & Nida's Wedding")+"&dates="+f(WEDDING)+"/"+f(new Date(+WEDDING+4*36e5))+"&location="+encodeURIComponent("MCP Convention Centre, Irinjalakuda");
-try{new QRCode($("#qr"),{text:$("#mapLink").href,width:110,height:110,colorDark:"#0a2c25",colorLight:"#ffffff"})}catch(e){$("#qr").parentElement.style.display="none"}
+try{new QRCode($("#qr"),{text:$("#mapLink").href,width:110,height:110,colorDark:"#136207",colorLight:"#ffffff"})}catch(e){$("#qr").parentElement.style.display="none"}
 /* timeline */
 $$("#tl li").forEach(li=>li.onclick=()=>{const o=li.classList.contains("open");$$("#tl li").forEach(x=>x.classList.remove("open"));if(!o)li.classList.add("open")});
 /* reveal */
