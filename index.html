@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Faris &amp; Nida — Wedding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e3b32;--bg2:#0a2c25;--ink:#f6efe2;--muted:#b9cbc3;--gold:#d4ad5b;--rose:#e9b8b4;--card:rgba(255,255,255,.06);--line:rgba(212,173,91,.35);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#0e3b32;--bg2:#0a2c25}}
+html{scroll-behavior:smooth;scroll-padding-top:70px;height:auto}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;margin:0;line-height:1.1}
+a{color:var(--gold)}
+canvas#petals{position:fixed;inset:0;pointer-events:none;z-index:0}
+main,header,footer,nav{position:relative;z-index:1}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:5;display:flex;justify-content:center;gap:22px;padding:14px;background:rgba(10,44,37,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-size:14px}
+nav a{color:var(--ink);text-decoration:none;opacity:.85}nav a:hover{color:var(--gold);opacity:1}
+.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:110px 20px 60px;background:radial-gradient(ellipse at 50% 30%,#175245,var(--bg) 70%)}
+.hero .bismi{color:var(--gold);font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;margin-bottom:18px}
+.hero h1{font-size:clamp(52px,12vw,128px);letter-spacing:.01em}
+.hero h1 span{display:block;font-style:italic;color:var(--gold);font-size:.4em;margin:6px 0}
+.hero p{color:var(--muted);margin:22px auto 0;max-width:34ch}
+.date{font-family:"Cormorant Garamond",serif;font-size:26px;margin-top:26px;color:var(--rose)}
+section{padding:90px 20px;max-width:980px;margin:auto}
+h2{font-size:clamp(36px,6vw,58px);text-align:center;margin-bottom:12px}
+.sub{text-align:center;color:var(--muted);margin:0 auto 44px;max-width:52ch}
+.count{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.unit{width:104px;padding:16px 0;border:1px solid var(--line);border-radius:14px;background:var(--card);text-align:center}
+.unit b{display:block;font:600 44px/1 "Cormorant Garamond",serif;color:var(--gold);font-variant-numeric:tabular-nums}
+.unit.tick b{animation:tick .35s ease}
+@keyframes tick{0%{transform:translateY(-8px);opacity:.3}100%{transform:none;opacity:1}}
+.unit small{color:var(--muted);font-size:13px}
+.couple{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.person{padding:32px;border:1px solid var(--line);border-radius:22px 22px 80px 22px;background:var(--card)}
+.person:nth-child(2){border-radius:22px 22px 22px 80px}
+.person h3{font-size:34px;color:var(--gold);margin-bottom:8px}
+.person p{margin:6px 0;color:var(--muted)}
+.venue{background:var(--bg2);max-width:none}
+.venue>div{max-width:980px;margin:auto}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+.box{padding:30px;border:1px solid var(--line);border-radius:18px}
+.box h3{font-size:30px;color:var(--gold);margin-bottom:8px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-block;padding:12px 22px;border-radius:99px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-weight:500;background:none;cursor:pointer;font:500 15px Manrope,sans-serif;transition:.25s}
+.btn:hover{background:var(--gold);color:var(--bg2)}
+.btn.solid{background:var(--gold);color:var(--bg2)}.btn.solid:hover{background:var(--rose);border-color:var(--rose)}
+.timeline{list-style:none;padding:0;margin:0;border-left:2px solid var(--line)}
+.timeline li{padding:0 0 26px 26px;position:relative;cursor:pointer}
+.timeline li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);transition:.3s}
+.timeline li.open::before{background:var(--gold);transform:scale(1.4)}
+.timeline h3{font-size:26px}
+.timeline p{margin:0;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .4s}
+.timeline li.open p{max-height:120px}
+/* RSVP */
+.rsvp{max-width:640px;margin:auto;border:1px solid var(--line);border-radius:26px;background:var(--card);padding:34px 30px}
+.prog{display:flex;gap:6px;margin-bottom:26px}
+.prog i{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.14);transition:.4s}
+.prog i.on{background:var(--gold)}
+.step{display:none;animation:in .4s ease}.step.show{display:block}
+@keyframes in{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.step h3{font-size:32px;margin-bottom:16px}
+label.f{display:block;font-size:14px;color:var(--muted);margin:14px 0 6px}
+input[type=text],input[type=tel],textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--ink);font:inherit}
+input:focus,textarea:focus,button:focus-visible,.choice:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.choice{padding:18px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.15);color:var(--ink);cursor:pointer;text-align:center;font:500 16px Manrope,sans-serif;transition:.25s}
+.choice:hover{transform:translateY(-2px)}
+.choice[aria-pressed=true]{background:var(--gold);color:var(--bg2);border-color:var(--gold)}
+.stepper{display:flex;align-items:center;justify-content:center;gap:22px;margin:10px 0}
+.stepper button{width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);background:none;color:var(--gold);font-size:26px;cursor:pointer}
+.stepper button:hover{background:var(--gold);color:var(--bg2)}
+.stepper output{font:600 64px/1 "Cormorant Garamond",serif;min-width:70px;text-align:center}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;min-height:34px}
+.chip{padding:4px 14px;border-radius:99px;background:rgba(233,184,180,.18);color:var(--rose);font-size:14px;animation:in .3s}
+.nav{display:flex;justify-content:space-between;margin-top:26px}
+.err{color:#ffb4a8;font-size:14px;min-height:20px;margin-top:8px}
+.done{text-align:center}
+.done h3{font-size:40px;color:var(--gold)}
+.wall{display:grid;gap:14px;max-width:640px;margin:26px auto 0}
+.wish{padding:16px 20px;border-left:3px solid var(--gold);background:var(--card);border-radius:0 14px 14px 0;animation:in .4s}
+.wish b{color:var(--rose)}
+footer{text-align:center;padding:60px 20px 90px;color:var(--muted);border-top:1px solid var(--line)}
+footer h2{font-size:44px;color:var(--ink)}
+.quote{text-align:center;padding:70px 20px 10px}
+.quote .ar{font:400 clamp(26px,5vw,40px)/2 Amiri,"Noto Naskh Arabic",serif;color:var(--gold);margin:0 auto;max-width:22em}
+.quote .en{font:italic 400 22px/1.5 "Cormorant Garamond",serif;margin:14px auto 6px;max-width:34em}
+.quote .ref{color:var(--muted);font-size:14px;margin:0}
+.qr{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:16px}
+.qr-box{background:#fff;padding:8px;border-radius:12px;line-height:0}
+.qr small{color:var(--muted);max-width:14ch;line-height:1.4;display:block}
+.reveal{opacity:0;transform:translateY(14px);transition:1s}.reveal.in{opacity:1;transform:none}
+@media(max-width:680px){.couple,.vgrid{grid-template-columns:1fr}.unit{width:76px}.unit b{font-size:34px}nav{gap:14px;font-size:13px}.choices{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}canvas#petals{display:none}}
+</style>
+</head>
+<body>
+<canvas id="petals" aria-hidden="true"></canvas>
+<nav><a href="#us">Couple</a><a href="#day">The day</a><a href="#venue">Venue</a><a href="#rsvp">RSVP</a><a href="#wishes">Wishes</a></nav>
+
+<header class="hero">
+<div>
+<div class="bismi">With the blessings of Almighty Allah</div>
+<h1>Faris<span>&amp;</span>Nida</h1>
+<div class="date">Wedding reception<br>Sunday, 20 December 2026 · 6:00 PM</div>
+<p>MCP Convention Centre, Irinjalakuda</p>
+<div class="btns" style="justify-content:center;margin-top:30px"><a class="btn solid" href="#rsvp">RSVP now</a><a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a></div>
+</div>
+</header>
+
+<main>
+<section class="quote reveal" aria-label="Quran verse">
+<p class="ar" lang="ar" dir="rtl">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+<p class="en">And among His signs is that He created for you spouses from among yourselves, that you may find comfort in them, and He placed between you affection and mercy.</p>
+<p class="ref">Surah Ar-Rum (30:21)</p>
+</section>
+
+<section id="count" class="reveal">
+<h2 id="cdTitle">Counting down</h2>
+<p class="sub" id="cdSub">Every second brings us closer to celebrating with you.</p>
+<div class="count" role="timer" aria-live="off">
+<div class="unit"><b id="d">00</b><small>days</small></div>
+<div class="unit"><b id="h">00</b><small>hours</small></div>
+<div class="unit"><b id="m">00</b><small>minutes</small></div>
+<div class="unit"><b id="s">00</b><small>seconds</small></div>
+</div>
+</section>
+
+<section id="us" class="reveal">
+<h2>Two families, one celebration</h2>
+<p class="sub">Together with their parents, we invite you to the wedding reception of</p>
+<div class="couple">
+<div class="person"><h3>Mohammed Faris</h3><p>Son of Mahaboob Abdu &amp; Sabitha Mahaboob</p><p>Mahabville House, Azad Road,<br>Irinjalakuda, Thrissur</p></div>
+<div class="person"><h3>Nida Haris</h3><p>Daughter of Mr Haris Mohammed &amp; Mrs Shefna Haris</p><p>Nedumpurath House, Kaloor,<br>Ernakulam, Kochi</p></div>
+</div>
+</section>
+
+<section id="day" class="reveal">
+<h2>The day</h2>
+<p class="sub">The reception follows the nikah. Tap an event to see the details.</p>
+<ul class="timeline" id="tl">
+<li class="open"><h3>Reception begins · 6:00 PM</h3><p>Guests are welcomed at MCP Convention Centre from 6:00 PM.</p></li>
+<li><h3>Dinner</h3><p>Dinner is served during the evening. Everyone is welcome.</p></li>
+<li><h3>Photos with the couple</h3><p>Come on stage to greet Faris and Nida and take a photo together.</p></li>
+</ul>
+</section>
+
+<section class="venue" id="venue"><div class="reveal">
+<h2>Venue</h2>
+<p class="sub">Find us in the heart of Irinjalakuda.</p>
+<div class="vgrid">
+<div class="box"><h3>MCP Convention Centre</h3><p>Irinjalakuda, Thrissur, Kerala</p><p style="color:var(--muted)">Ample parking on site.</p>
+<div class="qr"><a class="btn solid" target="_blank" rel="noopener" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=MCP+Convention+Centre+Irinjalakuda">Open in Maps</a><div class="qr-box" id="qr" aria-label="QR code for venue location"></div><small>Scan for directions</small></div></div>
+<div class="box"><h3>Weather on the day</h3><p id="wx" style="color:var(--muted)">December in Thrissur is usually warm and dry, around 22–32 °C. Light cotton clothing works well.</p></div>
+</div></div>
+</section>
+
+<section id="rsvp" class="reveal">
+<h2>Will you join us?</h2>
+<p class="sub">Four quick steps. Please reply before 1 December 2026.</p>
+<div class="rsvp">
+<div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+
+<div class="step show" data-s="0">
+<h3>Your name</h3>
+<label class="f" for="nm">Full name</label><input type="text" id="nm" autocomplete="name" placeholder="e.g. Ahmed Kabeer">
+<label class="f" for="ph">Phone (optional)</label><input type="tel" id="ph" autocomplete="tel" placeholder="+91">
+<div class="err" id="e0"></div>
+<div class="nav"><span></span><button class="btn solid" data-next>Continue</button></div>
+</div>
+
+<div class="step" data-s="1">
+<h3>Can you make it?</h3>
+<div class="choices">
+<button class="choice" data-att="yes" aria-pressed="false">Yes, we'll be there</button>
+<button class="choice" data-att="no" aria-pressed="false">Sorry, we can't</button>
+</div>
+<div class="err" id="e1"></div>
+<div class="nav"><button class="btn" data-back>Back</button><button class="btn solid" data-next>Continue</button></div>
+</div>
+
+<div class="step" data-s="2">
+<h3>How many guests?</h3>
+<p style="text-align:center;color:var(--muted);margin:0">Including yourself.</p>
+<div class="stepper"><button type="button" id="minus" aria-label="Fewer guests">−</button><output id="cnt" aria-live="polite">1</output><button type="button" id="plus" aria-label="More guests">+</button></div>
+<div class="chips" id="chips"></div>
+<label class="f" for="gn">Guest names (optional, comma separated)</label><input type="text" id="gn" placeholder="e.g. Shifa, Adil">
+<div class="nav"><button class="btn" data-back>Back</button><button class="btn solid" data-next>Continue</button></div>
+</div>
+
+<div class="step" data-s="3">
+<h3>Leave a wish</h3>
+<label class="f" for="ms">A message for the couple (optional)</label><textarea id="ms" rows="4" maxlength="240" placeholder="Wishing you a lifetime of happiness…"></textarea>
+<div class="nav"><button class="btn" data-back>Back</button><button class="btn solid" id="send">Send RSVP</button></div>
+</div>
+
+<div class="step done" data-s="4" id="doneBox">
+<h3 id="doneT">Thank you!</h3>
+<p id="doneP" style="color:var(--muted)"></p>
+<div class="btns" style="justify-content:center"><a class="btn solid" href="#wishes">See wishes</a></div>
+</div>
+</div>
+</section>
+
+<section id="wishes" class="reveal">
+<h2>Wishes for the couple</h2>
+<p class="sub">Messages from family and friends appear here.</p>
+<div class="wall" id="wall">
+<div class="wish"><b>Mahabville family</b><br>Alhamdulillah. Welcome to our home, Nida.</div>
+</div>
+</section>
+</main>
+
+<footer><h2>Faris &amp; Nida</h2><p>20 December 2026 · 6:00 PM · MCP Convention Centre, Irinjalakuda</p><p>Your presence and duas are the best gift.</p></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const WEDDING=new Date("2026-12-20T18:00:00+05:30");
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* countdown */
+const prev={};
+function set(id,v){const el=$("#"+id),t=String(v).padStart(2,"0");if(prev[id]!==t){el.textContent=t;prev[id]=t;const u=el.parentElement;u.classList.remove("tick");void u.offsetWidth;u.classList.add("tick")}}
+function tickCd(){let diff=WEDDING-new Date();
+if(diff<=0){$("#cdTitle").textContent="Alhamdulillah, they're married";$("#cdSub").textContent="Thank you for celebrating with us.";diff=0}
+const S=Math.floor(diff/1000);set("d",Math.floor(S/86400));set("h",Math.floor(S%86400/3600));set("m",Math.floor(S%3600/60));set("s",S%60)}
+tickCd();setInterval(tickCd,1000);
+/* calendar link */
+const f=d=>d.toISOString().replace(/[-:]|\.\d{3}/g,"");
+$("#cal").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Faris & Nida's Wedding")+"&dates="+f(WEDDING)+"/"+f(new Date(+WEDDING+4*36e5))+"&location="+encodeURIComponent("MCP Convention Centre, Irinjalakuda");
+try{new QRCode($("#qr"),{text:$("#mapLink").href,width:110,height:110,colorDark:"#0a2c25",colorLight:"#ffffff"})}catch(e){$("#qr").parentElement.style.display="none"}
+/* timeline */
+$$("#tl li").forEach(li=>li.onclick=()=>{const o=li.classList.contains("open");$$("#tl li").forEach(x=>x.classList.remove("open"));if(!o)li.classList.add("open")});
+/* reveal */
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
+$$(".reveal").forEach(el=>io.observe(el));
+/* RSVP */
+let step=0,att=null,guests=1;
+const steps=$$(".step"),bars=$$(".prog i");
+function go(n){step=n;steps.forEach((s,i)=>s.classList.toggle("show",i===n));bars.forEach((b,i)=>b.classList.toggle("on",i<=Math.min(n,3)))}
+$$("[data-back]").forEach(b=>b.onclick=()=>go(step-1));
+$$("[data-next]").forEach(b=>b.onclick=()=>{
+ if(step===0&&!$("#nm").value.trim()){$("#e0").textContent="Please enter your name so we know who is replying.";$("#nm").focus();return}
+ $("#e0").textContent="";
+ if(step===1){if(!att){$("#e1").textContent="Please choose whether you can attend.";return}$("#e1").textContent="";if(att==="no"){go(3);return}}
+ go(step+1)});
+$$(".choice").forEach(c=>c.onclick=()=>{att=c.dataset.att;$$(".choice").forEach(x=>x.setAttribute("aria-pressed",x===c));$("#e1").textContent=""});
+function draw(){$("#cnt").textContent=guests;$("#chips").innerHTML=Array.from({length:guests},(_,i)=>'<span class="chip">'+(i===0?"You":"Guest "+(i+1))+"</span>").join("")}
+$("#minus").onclick=()=>{guests=Math.max(1,guests-1);draw()};
+$("#plus").onclick=()=>{guests=Math.min(10,guests+1);draw()};draw();
+$("#send").onclick=()=>{
+ const name=$("#nm").value.trim(),msg=$("#ms").value.trim(),yes=att==="yes";
+ const rec={name,phone:$("#ph").value,attending:yes,guests:yes?guests:0,guestNames:$("#gn").value,message:msg,at:new Date().toISOString()};
+ try{const all=JSON.parse(localStorage.getItem("rsvps")||"[]");all.push(rec);localStorage.setItem("rsvps",JSON.stringify(all))}catch(e){}
+ $("#doneT").textContent=yes?"See you there, "+name.split(" ")[0]+"!":"We'll miss you, "+name.split(" ")[0];
+ $("#doneP").textContent=yes?"Your reply for "+guests+(guests>1?" guests":" guest")+" is noted for 20 December 2026.":"Thank you for letting us know. You'll be in our duas.";
+ if(msg){const w=document.createElement("div");w.className="wish";const b=document.createElement("b");b.textContent=name;w.append(b,document.createElement("br"),msg);$("#wall").prepend(w)}
+ go(4);if(yes)confetti();
+};
+/* confetti */
+function confetti(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+ const c=document.createElement("canvas");Object.assign(c.style,{position:"fixed",inset:0,zIndex:9,pointerEvents:"none"});c.width=innerWidth;c.height=innerHeight;document.body.append(c);
+ const x=c.getContext("2d"),cols=["#d4ad5b","#e9b8b4","#f6efe2","#5fb59b"];
+ const p=Array.from({length:120},()=>({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:Math.random()*-14-2,r:Math.random()*6+3,c:cols[Math.random()*4|0],a:Math.random()*6}));
+ let n=0;(function f(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.vy+=.3;q.x+=q.vx;q.y+=q.vy;q.a+=.2;x.fillStyle=q.c;x.save();x.translate(q.x,q.y);x.rotate(q.a);x.fillRect(-q.r,-q.r/2,q.r*2,q.r);x.restore()});if(++n<160)requestAnimationFrame(f);else c.remove()})();}
+/* falling petals */
+(function(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+ const c=$("#petals"),x=c.getContext("2d");let W,H;const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};rs();addEventListener("resize",rs);
+ const P=Array.from({length:22},()=>({x:Math.random()*W,y:Math.random()*H,s:Math.random()*7+4,v:Math.random()*.6+.3,d:Math.random()*2*Math.PI,r:Math.random()*6}));
+ (function a(){x.clearRect(0,0,W,H);P.forEach(p=>{p.y+=p.v;p.d+=.012;p.x+=Math.sin(p.d)*.6;p.r+=.01;if(p.y>H+10){p.y=-10;p.x=Math.random()*W}
+ x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="rgba(233,184,180,.35)";x.beginPath();x.ellipse(0,0,p.s,p.s/2,0,0,7);x.fill();x.restore()});requestAnimationFrame(a)})()})();
+</script>
+</body>
+</html>
