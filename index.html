@@ -4,249 +4,523 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Faris &amp; Nida — Wedding Reception</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
 
-:root{--bg:#ebdfd1;--ink:#3b2d26;--muted:#5c4a41;--gold:#a78d80;--accent:#3b2d26;--card:rgba(167,141,128,.16);--line:rgba(167,141,128,.8);
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-text-size-adjust:100%}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.7 Manrope,system-ui,sans-serif;overflow-x:hidden}
-h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;margin:0;line-height:1.1}
-a{color:var(--accent)}
-canvas#petals{position:fixed;inset:0;pointer-events:none;z-index:0}
-main,header,footer,nav{position:relative;z-index:1}
-nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:5;display:flex;justify-content:center;gap:22px;padding:0 14px;background:rgba(235,223,209,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-size:14px;overflow-x:auto;white-space:nowrap}
-nav a{color:var(--ink);text-decoration:none;padding:14px 4px;min-height:44px}nav a:hover{text-decoration:underline}
-.hero{min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding:100px 20px 60px;background:radial-gradient(ellipse at 50% 30%,#c7af95,var(--bg) 72%)}
-.hero .bismi{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;margin-bottom:18px}
-.hero h1{font-size:clamp(52px,13vw,128px);letter-spacing:.01em}
-.hero h1 span{display:block;font-style:italic;font-size:.4em;margin:6px 0;color:#a78d80}
-.hero p{color:var(--muted);margin:22px auto 0;max-width:34ch}
-.date{font-family:"Cormorant Garamond",serif;font-size:26px;margin-top:26px}
-section{padding:90px 20px;max-width:980px;margin:auto}
-h2{font-size:clamp(36px,6vw,58px);text-align:center;margin-bottom:12px}
-.sub{text-align:center;color:var(--muted);margin:0 auto 44px;max-width:52ch}
-.count{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:520px;margin:auto}
-.unit{padding:16px 4px;border:1px solid var(--line);border-radius:14px;background:var(--card);text-align:center}
-.unit b{display:block;font:600 44px/1 "Cormorant Garamond",serif;font-variant-numeric:tabular-nums}
-.unit.tick b{animation:tick .35s ease}
-@keyframes tick{0%{transform:translateY(-8px);opacity:.3}100%{transform:none;opacity:1}}
-.unit small{color:var(--muted);font-size:13px}
-.couple{display:grid;grid-template-columns:1fr 1fr;gap:30px}
-.person{padding:32px;border:1px solid var(--line);border-radius:22px 22px 80px 22px;background:var(--card)}
-.person:nth-child(2){border-radius:22px 22px 22px 80px}
-.person h3{font-size:34px;margin-bottom:8px}
-.person p{margin:6px 0;color:var(--muted)}
-.venue{max-width:none;background:#c0b4a8}
-.venue>div{max-width:980px;margin:auto}
-.vgrid{display:grid;grid-template-columns:1fr;max-width:640px;margin:auto}
-.box{padding:30px;border:1px solid var(--gold);border-radius:18px;background:rgba(235,223,209,.45)}
-.box h3{font-size:30px;margin-bottom:8px}
-.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 22px;border-radius:99px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;background:none;cursor:pointer;font:500 15px Manrope,sans-serif;transition:.25s}
-.btn:hover{background:var(--accent);color:var(--bg)}
-.btn.solid{background:var(--accent);color:var(--bg)}.btn.solid:hover{opacity:.85}
-.timeline{list-style:none;padding:0;margin:0;border-left:2px solid var(--gold)}
-.timeline li{padding:0 0 26px 26px;position:relative;cursor:pointer}
-.timeline li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);transition:.3s}
-.timeline li.open::before{background:var(--accent);transform:scale(1.4)}
-.timeline h3{font-size:26px}
-.timeline p{margin:0;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .4s}
-.timeline li.open p{max-height:160px}
-.rsvp{max-width:640px;margin:auto;border:1px solid var(--gold);border-radius:26px;background:var(--card);padding:34px 30px}
-@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-label.f{display:block;font-size:14px;color:var(--muted);margin:14px 0 6px}
-input[type=text],textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--gold);background:rgba(255,255,255,.55);color:var(--ink);font:inherit;font-size:16px}
-input:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.choice{min-height:56px;padding:14px;border-radius:16px;border:1px solid var(--gold);background:rgba(255,255,255,.4);color:var(--ink);cursor:pointer;text-align:center;font:500 16px Manrope,sans-serif;transition:.25s}
-.choice:hover{transform:translateY(-2px)}
-.choice[aria-pressed=true]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-#gwrap{animation:in .35s}
-.stepper{display:flex;align-items:center;justify-content:center;gap:22px;margin:10px 0}
-.stepper button{width:52px;height:52px;border-radius:50%;border:1px solid var(--accent);background:none;color:var(--accent);font-size:26px;cursor:pointer}
-.stepper button:hover{background:var(--accent);color:var(--bg)}
-.stepper output{font:600 64px/1 "Cormorant Garamond",serif;min-width:70px;text-align:center}
-.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;min-height:34px}
-.chip{padding:4px 14px;border-radius:99px;background:rgba(167,141,128,.3);font-size:14px;animation:in .3s}
-.nav{display:flex;margin-top:26px}
-.err{color:#8a2f1f;font-size:14px;min-height:20px;margin-top:8px}
-.done{text-align:center;animation:in .4s}
-.done h3{font-size:40px}
-.wall{display:grid;gap:14px;max-width:640px;margin:26px auto 0}
-.wish{padding:16px 20px;border-left:3px solid var(--gold);background:var(--card);border-radius:0 14px 14px 0;animation:in .4s;overflow-wrap:anywhere}
-footer{text-align:center;padding:60px 20px 90px;color:var(--ink);background:#c7af95}
-footer h2{font-size:44px}
-.quote{text-align:center;padding:70px 20px 10px}
-.quote .ar{font:400 clamp(24px,5vw,38px)/2 Amiri,"Noto Naskh Arabic",serif;margin:0 auto;max-width:22em}
-.quote .en{font:italic 400 20px/1.5 "Cormorant Garamond",serif;margin:14px auto 6px;max-width:34em}
-.quote .ref{color:var(--muted);font-size:14px;margin:0}
-.qr{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:16px}
-.qr-box{background:#fff;padding:8px;border-radius:12px;line-height:0}
-.qr small{font-size:13px;color:var(--muted);max-width:14ch;line-height:1.4;display:block}
-.reveal{opacity:0;transform:translateY(14px);transition:1s}.reveal.in{opacity:1;transform:none}
-@media(max-width:680px){
-section{padding:60px 18px}
-nav{justify-content:flex-start;gap:16px}
-.hero{padding-top:90px}
-.date{font-size:22px}
-.couple{grid-template-columns:1fr;gap:18px}
-.person{padding:24px;border-radius:20px!important}
-.count{gap:8px}.unit b{font-size:30px}.unit small{font-size:12px}
-.box,.rsvp{padding:24px 18px}
-.choices{grid-template-columns:1fr}
-.btns .btn{flex:1 1 100%}
-.qr .btn{flex:0 0 auto}
-.nav .btn{width:100%}
-.sub{margin-bottom:30px}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* Permanent Powder Theme */
+:root {
+    --bg: #d5e0e8; 
+    --ink: #1e2f3d; 
+    --muted: rgba(30,47,61,.75); 
+    --gold: #7998b0; 
+    --accent: #587a96; 
+    --card: rgba(255,255,255,.45); 
+    --line: rgba(88,122,150,.3); 
+    --hero-glow: #c6d5e0;
+    --input-bg: rgba(255,255,255,.5); 
+    --nav-bg: rgba(255,255,255,.6);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}canvas#petals{display:none}}
+
+html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+* { box-sizing: border-box; }
+body { 
+    margin: 0; 
+    background: var(--bg); 
+    color: var(--ink); 
+    font: 400 16px/1.7 Manrope, system-ui, sans-serif; 
+    overflow-x: hidden; 
+    transition: background-color 0.8s ease, color 0.8s ease; 
+}
+h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400; margin: 0; line-height: 1.1; }
+a { color: var(--accent); transition: color 0.3s; }
+canvas#petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+main, header, footer, nav { position: relative; z-index: 1; }
+
+nav { 
+    position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 5; 
+    display: flex; justify-content: center; gap: 22px; padding: 0 14px; 
+    background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); 
+    font-size: 14px; overflow-x: auto; white-space: nowrap; transition: background 0.8s ease, border-color 0.8s ease;
+}
+nav a { color: var(--ink); text-decoration: none; padding: 14px 4px; min-height: 44px; transition: 0.2s; }
+nav a:hover { text-decoration: underline; opacity: 0.8; }
+
+.hero { 
+    min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; 
+    padding: 100px 20px 60px; background: radial-gradient(ellipse at 50% 35%, var(--hero-glow), var(--bg) 75%); 
+    position: relative; overflow: hidden; transition: background 0.8s ease; 
+}
+.hero > div { position: relative; z-index: 1; }
+
+.orn { 
+    position: absolute; width: clamp(120px, 30vw, 340px); aspect-ratio: 1; fill: none; 
+    stroke: var(--gold); stroke-width: 1.2; opacity: .2; pointer-events: none; 
+    -webkit-mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 78%); 
+    mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 78%); transition: stroke 0.8s ease; 
+}
+.orn.tl { top: 12px; left: 12px; }
+.orn.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.orn.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.orn.br { bottom: 12px; right: 12px; transform: scale(-1, -1); }
+
+.hero .bismi { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 18px; margin-bottom: 18px; }
+.hero h1, footer h2 { font-family: "Italianno", cursive; font-weight: 400; }
+.hero h1 { font-size: clamp(88px, 20vw, 198px); line-height: 1.05; }
+.hero h1 span { display: block; font-family: "Cormorant Garamond", serif; font-style: italic; margin: 0; color: var(--gold); font-size: .25em; transition: color 0.8s ease; }
+.hero p { color: var(--muted); margin: 22px auto 0; max-width: 34ch; }
+.date { font-family: "Cormorant Garamond", serif; font-size: 26px; margin-top: 26px; }
+
+section { padding: 90px 20px; max-width: 980px; margin: auto; }
+h2 { font-size: clamp(36px, 6vw, 58px); text-align: center; margin-bottom: 12px; }
+.sub { text-align: center; color: var(--muted); margin: 0 auto 44px; max-width: 52ch; transition: color 0.8s ease; }
+
+.count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 520px; margin: auto; }
+.unit { padding: 16px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); text-align: center; transition: all 0.8s ease; }
+.unit b { display: block; font: 600 44px/1 "Cormorant Garamond", serif; font-variant-numeric: tabular-nums; }
+.unit.tick b { animation: tick .35s ease; }
+@keyframes tick { 0% { transform: translateY(-8px); opacity: .3; } 100% { transform: none; opacity: 1; } }
+.unit small { color: var(--muted); font-size: 13px; }
+
+.couple { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.person { padding: 32px; border: 1px solid var(--line); border-radius: 22px 22px 80px 22px; background: var(--card); transition: all 0.8s ease; }
+.person:nth-child(2) { border-radius: 22px 22px 22px 80px; }
+.person h3 { font-size: 34px; margin-bottom: 8px; }
+.person p { margin: 6px 0; color: var(--muted); }
+
+.venue { max-width: none; }
+.venue > div { max-width: 980px; margin: auto; }
+.vgrid { display: grid; grid-template-columns: 1fr; max-width: 640px; margin: auto; }
+.box { padding: 30px; border: 1px solid var(--gold); border-radius: 18px; background: var(--card); transition: all 0.8s ease; }
+.box h3 { font-size: 30px; margin-bottom: 8px; }
+
+.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--gold); transition: border-color 0.8s ease; }
+.timeline li { padding: 0 0 26px 26px; position: relative; cursor: pointer; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); transition: 0.3s; }
+.timeline li.open::before { background: var(--accent); transform: scale(1.4); }
+.timeline h3 { font-size: 26px; }
+.timeline p { margin: 0; color: var(--muted); max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+.timeline li.open p { max-height: 160px; }
+
+.btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 22px; border-radius: 99px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; background: none; cursor: pointer; font: 500 15px Manrope, sans-serif; transition: 0.25s; }
+.btn:hover { background: var(--accent); color: var(--bg); }
+.btn.solid { background: var(--accent); color: var(--bg); }
+.btn.solid:hover { opacity: .85; }
+
+.rsvp { max-width: 640px; margin: auto; border: 1px solid var(--line); border-radius: 26px; background: var(--card); padding: 34px 30px; transition: all 0.8s ease; }
+@keyframes in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+label.f { display: block; font-size: 14px; color: var(--muted); margin: 14px 0 6px; transition: color 0.8s ease; }
+
+input[type=text], textarea { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--input-bg); color: var(--ink); font: inherit; font-size: 16px; transition: all 0.3s; }
+input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.choice { min-height: 56px; padding: 14px; border-radius: 16px; border: 1px solid var(--line); background: var(--input-bg); color: var(--ink); cursor: pointer; text-align: center; font: 500 16px Manrope, sans-serif; transition: 0.25s; }
+.choice:hover { transform: translateY(-2px); }
+.choice[aria-pressed=true] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+#gwrap { animation: in .35s; }
+.stepper { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 10px 0; }
+.stepper button { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--accent); background: none; color: var(--accent); font-size: 26px; cursor: pointer; transition: 0.2s; }
+.stepper button:hover { background: var(--accent); color: var(--bg); }
+.stepper output { font: 600 64px/1 "Cormorant Garamond", serif; min-width: 70px; text-align: center; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; min-height: 34px; }
+.chip { padding: 4px 14px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); font-size: 14px; animation: in .3s; transition: all 0.8s ease; }
+
+.nav { display: flex; margin-top: 26px; }
+.err { color: #e57373; font-size: 14px; min-height: 20px; margin-top: 8px; }
+.done { text-align: center; animation: in .4s; }
+.done h3 { font-size: 40px; color: var(--gold); }
+
+.wall { display: grid; gap: 14px; max-width: 640px; margin: 26px auto 0; }
+.wish { padding: 16px 20px; border-left: 3px solid var(--gold); background: var(--card); border-radius: 0 14px 14px 0; animation: in .4s; overflow-wrap: anywhere; transition: all 0.8s ease; }
+
+footer { text-align: center; padding: 60px 20px 90px; color: var(--ink); }
+footer h2 { font-size: 64px; }
+
+.quote { text-align: center; padding: 70px 20px 10px; }
+.quote .ar { font: 400 clamp(24px, 5vw, 38px)/2 Amiri, "Noto Naskh Arabic", serif; margin: 0 auto; max-width: 22em; }
+.quote .en { font: italic 400 20px/1.5 "Cormorant Garamond", serif; margin: 14px auto 6px; max-width: 34em; }
+.quote .ref { color: var(--muted); font-size: 14px; margin: 0; }
+
+.qr { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
+.qr-box { background: #fff; padding: 8px; border-radius: 12px; line-height: 0; }
+.qr small { font-size: 13px; color: var(--muted); max-width: 14ch; line-height: 1.4; display: block; text-align: left; }
+.reveal { opacity: 0; transform: translateY(14px); transition: 1s; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media(max-width: 680px) {
+    section { padding: 60px 18px; }
+    nav { justify-content: flex-start; gap: 16px; }
+    .hero { padding-top: 90px; }
+    .date { font-size: 22px; }
+    .couple { grid-template-columns: 1fr; gap: 18px; }
+    .person { padding: 24px; border-radius: 20px !important; }
+    .count { gap: 8px; } .unit b { font-size: 30px; } .unit small { font-size: 12px; }
+    .box, .rsvp { padding: 24px 18px; }
+    .choices { grid-template-columns: 1fr; }
+    .btns .btn { flex: 1 1 100%; }
+    .qr { justify-content: flex-start; }
+    .qr .btn { flex: 0 0 auto; }
+    .nav .btn { width: 100%; }
+    .sub { margin-bottom: 30px; }
+}
+@media(prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    canvas#petals { display: none; }
+}
 </style>
 </head>
 <body>
 <canvas id="petals" aria-hidden="true"></canvas>
-<nav class="dark"><a href="#us">Couple</a><a href="#day">The day</a><a href="#venue">Venue</a><a href="#rsvp">RSVP</a><a href="#wishes">Wishes</a></nav>
 
-<header class="hero dark">
-<div>
-<div class="bismi">With the blessings of Almighty Allah</div>
-<h1>Faris<span>&amp;</span>Nida</h1>
-<div class="date">Wedding reception<br>Sunday, 20 December 2026 · 6:00 PM</div>
-<p>MCP Convention Centre, Irinjalakuda</p>
-<div class="btns" style="justify-content:center;margin-top:30px"><a class="btn solid" href="#rsvp">RSVP now</a><a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a></div>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+        <symbol id="corner" viewBox="0 0 200 200">
+            <path d="M2 198V60Q2 2 60 2H198"/>
+            <path d="M18 198V78Q18 18 78 18H198" opacity=".6"/>
+            <path d="M34 34C90 34 120 62 104 98C92 124 56 118 62 92C66 76 90 78 88 94"/>
+            <path d="M34 34C34 90 62 120 98 104C124 92 118 56 92 62C76 66 78 90 94 88"/>
+            <path d="M110 40C140 30 165 40 180 62M40 110C30 140 40 165 62 180"/>
+            <path d="M120 34c10 10 24 12 36 4-6-12-22-16-36-4zM34 120c10 10 12 24 4 36-12-6-16-22-4-36z"/>
+            <circle cx="34" cy="34" r="4" fill="var(--gold)"/>
+            <circle cx="98" cy="98" r="3" fill="var(--gold)"/>
+            <circle cx="186" cy="10" r="2.5" fill="var(--gold)"/>
+            <circle cx="10" cy="186" r="2.5" fill="var(--gold)"/>
+        </symbol>
+    </defs>
+</svg>
+
+<nav>
+    <a href="#us">Couple</a>
+    <a href="#day">The day</a>
+    <a href="#venue">Venue</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="#wishes">Wishes</a>
+</nav>
+
+<header class="hero">
+    <svg class="orn tl" aria-hidden="true"><use href="#corner" width="100%" height="100%"/></svg>
+    <svg class="orn tr" aria-hidden="true"><use href="#corner" width="100%" height="100%"/></svg>
+    <svg class="orn bl" aria-hidden="true"><use href="#corner" width="100%" height="100%"/></svg>
+    <svg class="orn br" aria-hidden="true"><use href="#corner" width="100%" height="100%"/></svg>
+    <div>
+        <div class="bismi">With the blessings of Almighty Allah</div>
+        <h1>Faris<span>&amp;</span>Nida</h1>
+        <div class="date">Wedding reception<br>Sunday, 20 December 2026 · 6:00 PM</div>
+        <p>MCP Convention Centre, Irinjalakuda</p>
+        <div class="btns" style="justify-content:center;margin-top:30px">
+            <a class="btn solid" href="#rsvp">RSVP now</a>
+            <a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a>
+        </div>
+    </div>
 </header>
 
 <main>
-<section class="quote reveal" aria-label="Quran verse">
-<p class="ar" lang="ar" dir="rtl">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
-<p class="en">And among His signs is that He created for you spouses from among yourselves, that you may find comfort in them, and He placed between you affection and mercy.</p>
-<p class="ref">Surah Ar-Rum (30:21)</p>
-</section>
+    <section class="quote reveal" aria-label="Quran verse">
+        <p class="ar" lang="ar" dir="rtl">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+        <p class="en">And among His signs is that He created for you spouses from among yourselves, that you may find comfort in them, and He placed between you affection and mercy.</p>
+        <p class="ref">Surah Ar-Rum (30:21)</p>
+    </section>
 
-<section id="count" class="reveal">
-<h2 id="cdTitle">Counting down</h2>
-<p class="sub" id="cdSub">Every second brings us closer to celebrating with you.</p>
-<div class="count" role="timer" aria-live="off">
-<div class="unit"><b id="d">00</b><small>days</small></div>
-<div class="unit"><b id="h">00</b><small>hours</small></div>
-<div class="unit"><b id="m">00</b><small>minutes</small></div>
-<div class="unit"><b id="s">00</b><small>seconds</small></div>
-</div>
-</section>
+    <section id="count" class="reveal">
+        <h2 id="cdTitle">Counting down</h2>
+        <p class="sub" id="cdSub">Every second brings us closer to celebrating with you.</p>
+        <div class="count" role="timer" aria-live="off">
+            <div class="unit"><b id="d">00</b><small>days</small></div>
+            <div class="unit"><b id="h">00</b><small>hours</small></div>
+            <div class="unit"><b id="m">00</b><small>minutes</small></div>
+            <div class="unit"><b id="s">00</b><small>seconds</small></div>
+        </div>
+    </section>
 
-<section id="us" class="reveal">
-<h2>A Union Of Two Families</h2>
-<p class="sub">Together with their parents, we invite you to the wedding reception of</p>
-<div class="couple">
-<div class="person"><h3>Mohammed Faris</h3><p>Son of Mahaboob Abdu &amp; Sabitha Mahaboob</p><p>Mathilakath Veetil, Azad Road,<br>Irinjalakuda, Thrissur</p></div>
-<div class="person"><h3>Nida Haris</h3><p>Daughter of Haris Muhammed &amp; Shefna Haris</p><p>Nedumpurathu House, Silver Square,<br>Pullepady, Ernakulam</p></div>
-</div>
-</section>
+    <section id="us" class="reveal">
+        <h2>A Union Of Two Families</h2>
+        <p class="sub">Together with their parents, we invite you to the wedding reception of</p>
+        <div class="couple">
+            <div class="person">
+                <h3>Mohammed Faris</h3>
+                <p>Son of Mahaboob Abdu &amp; Sabitha Mahaboob</p>
+                <p>Mathilakath Veetil, Azad Road,<br>Irinjalakuda, Thrissur</p>
+            </div>
+            <div class="person">
+                <h3>Nida Haris</h3>
+                <p>Daughter of Haris Muhammed &amp; Shefna Haris</p>
+                <p>Nedumpurathu House, Silver Square,<br>Pullepady, Ernakulam</p>
+            </div>
+        </div>
+    </section>
 
-<section id="day" class="reveal">
-<h2>The day</h2>
-<p class="sub">The reception follows the nikah. Tap an event to see the details.</p>
-<ul class="timeline" id="tl">
-<li class="open"><h3>Reception begins · 6:00 PM</h3><p>Guests are welcomed at MCP Convention Centre from 6:00 PM.</p></li>
-<li><h3>Dinner</h3><p>Dinner is served during the evening. Everyone is welcome.</p></li>
-<li><h3>Photos with the couple</h3><p>Come on stage to greet Faris and Nida and take a photo together.</p></li>
-</ul>
-</section>
+    <section id="day" class="reveal">
+        <h2>The day</h2>
+        <p class="sub">The reception follows the nikah. Tap an event to see the details.</p>
+        <ul class="timeline" id="tl">
+            <li class="open">
+                <h3>Reception begins · 6:00 PM</h3>
+                <p>Guests are welcomed at MCP Convention Centre from 6:00 PM.</p>
+            </li>
+            <li>
+                <h3>Dinner</h3>
+                <p>Dinner is served during the evening. Everyone is welcome.</p>
+            </li>
+            <li>
+                <h3>Photos with the couple</h3>
+                <p>Come on stage to greet Faris and Nida and take a photo together.</p>
+            </li>
+        </ul>
+    </section>
 
-<section class="venue dark" id="venue"><div class="reveal">
-<h2>Venue</h2>
-<p class="sub">Find us in the heart of Irinjalakuda.</p>
-<div class="vgrid">
-<div class="box"><h3>MCP Convention Centre</h3><p>Irinjalakuda, Thrissur, Kerala</p>
-<div class="qr"><a class="btn solid" target="_blank" rel="noopener" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=MCP+Convention+Centre+Irinjalakuda">Open in Maps</a><div class="qr-box" id="qr" aria-label="QR code for venue location"></div><small>Scan for directions</small></div>
-</div>
-</div></div>
-</section>
+    <section class="venue" id="venue">
+        <div class="reveal">
+            <h2>Venue</h2>
+            <p class="sub">Find us in the heart of Irinjalakuda.</p>
+            <div class="vgrid">
+                <div class="box">
+                    <h3>MCP Convention Centre</h3>
+                    <p>Irinjalakuda, Thrissur, Kerala</p>
+                    <div class="qr">
+                        <a class="btn solid" target="_blank" rel="noopener" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=MCP+Convention+Centre+Irinjalakuda">Open in Maps</a>
+                        <div class="qr-box" id="qr" aria-label="QR code for venue location"></div>
+                        <small>Scan for directions</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="rsvp" class="reveal">
-<h2>Please join us</h2>
-<p class="sub">Let us know if you can make it. It only takes a moment.</p>
-<div class="rsvp"><div id="form">
-<label class="f" for="nm">Your name</label>
-<input type="text" id="nm" autocomplete="name" placeholder="e.g. Ahmed Kabeer">
-<div class="err" id="e0" role="alert"></div>
-<div class="choices" style="margin-top:14px">
-<button type="button" class="choice" data-att="yes" aria-pressed="true">Joyfully attending</button>
-<button type="button" class="choice" data-att="no" aria-pressed="false">Regretfully can't</button>
-</div>
-<div id="gwrap">
-<label class="f" style="text-align:center;margin-top:22px">Number of guests, including you</label>
-<div class="stepper"><button type="button" id="minus" aria-label="Fewer guests">−</button><output id="cnt" aria-live="polite">1</output><button type="button" id="plus" aria-label="More guests">+</button></div>
-<div class="chips" id="chips"></div>
-<div id="gnWrap" hidden><label class="f" for="gn">Names of your guests (optional)</label><input type="text" id="gn" placeholder="e.g. Shifa, Adil"></div>
-</div>
-<label class="f" for="ms">A message for the couple (optional)</label>
-<textarea id="ms" rows="3" maxlength="240" placeholder="Wishing you a lifetime of happiness…"></textarea>
-<div class="nav" style="justify-content:center"><button type="button" class="btn solid" id="send">Send RSVP</button></div>
-</div>
-<div class="done" id="doneBox" hidden>
-<h3 id="doneT">Thank you!</h3>
-<p id="doneP" style="color:var(--muted)"></p>
-<div class="btns" style="justify-content:center"><a class="btn solid" href="#wishes">See wishes</a></div>
-</div></div>
-</section>
+    <section id="rsvp" class="reveal">
+        <h2>Please join us</h2>
+        <p class="sub">Let us know if you can make it. It only takes a moment.</p>
+        <div class="rsvp">
+            <div id="form">
+                <label class="f" for="nm">Your name</label>
+                <input type="text" id="nm" autocomplete="name" placeholder="e.g. Ahmed Kabeer">
+                <div class="err" id="e0" role="alert"></div>
+                
+                <div class="choices" style="margin-top:14px">
+                    <button type="button" class="choice" data-att="yes" aria-pressed="true">Joyfully attending</button>
+                    <button type="button" class="choice" data-att="no" aria-pressed="false">Regretfully can't</button>
+                </div>
+                
+                <div id="gwrap">
+                    <label class="f" style="text-align:center;margin-top:22px">Number of guests, including you</label>
+                    <div class="stepper">
+                        <button type="button" id="minus" aria-label="Fewer guests">−</button>
+                        <output id="cnt" aria-live="polite">1</output>
+                        <button type="button" id="plus" aria-label="More guests">+</button>
+                    </div>
+                    <div class="chips" id="chips"></div>
+                    <div id="gnWrap" hidden>
+                        <label class="f" for="gn">Names of your guests (optional)</label>
+                        <input type="text" id="gn" placeholder="e.g. Shifa, Adil">
+                    </div>
+                </div>
+                
+                <label class="f" for="ms">A message for the couple (optional)</label>
+                <textarea id="ms" rows="3" maxlength="240" placeholder="Wishing you a lifetime of happiness…"></textarea>
+                
+                <div class="nav" style="justify-content:center">
+                    <button type="button" class="btn solid" id="send">Send RSVP</button>
+                </div>
+            </div>
+            
+            <div class="done" id="doneBox" hidden>
+                <h3 id="doneT">Thank you!</h3>
+                <p id="doneP" style="color:var(--muted)"></p>
+                <div class="btns" style="justify-content:center">
+                    <a class="btn solid" href="#wishes">See wishes</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="wishes" class="reveal">
-<h2>Wishes for the couple</h2>
-<p class="sub">Messages from family and friends appear here.</p>
-<div class="wall" id="wall">
-<div class="wish"><b>Faris's family</b><br>Alhamdulillah. Welcome to our family, Nida.</div>
-</div>
-</section>
+    <section id="wishes" class="reveal">
+        <h2>Wishes for the couple</h2>
+        <p class="sub">Messages from family and friends appear here.</p>
+        <div class="wall" id="wall">
+            <div class="wish"><b>Faris's family</b><br>Alhamdulillah. Welcome to our family, Nida.</div>
+        </div>
+    </section>
 </main>
 
-<footer class="dark"><h2>Faris &amp; Nida</h2><p>20 December 2026 · 6:00 PM · MCP Convention Centre, Irinjalakuda</p><p>Your presence and duas are the best gift.</p></footer>
+<footer>
+    <h2>Faris &amp; Nida</h2>
+    <p>20 December 2026 · 6:00 PM · MCP Convention Centre, Irinjalakuda</p>
+    <p>Your presence and duas are the best gift.</p>
+</footer>
 
+<!-- External Libs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
-const WEDDING=new Date("2026-12-20T18:00:00+05:30");
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const prev={};
-function set(id,v){const el=$("#"+id),t=String(v).padStart(2,"0");if(prev[id]!==t){el.textContent=t;prev[id]=t;const u=el.parentElement;u.classList.remove("tick");void u.offsetWidth;u.classList.add("tick")}}
-function tickCd(){let diff=WEDDING-new Date();
-if(diff<=0){$("#cdTitle").textContent="Alhamdulillah, they're married";$("#cdSub").textContent="Thank you for celebrating with us.";diff=0}
-const S=Math.floor(diff/1000);set("d",Math.floor(S/86400));set("h",Math.floor(S%86400/3600));set("m",Math.floor(S%3600/60));set("s",S%60)}
-tickCd();setInterval(tickCd,1000);
-const f=d=>d.toISOString().replace(/[-:]|\.\d{3}/g,"");
-$("#cal").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Faris & Nida's Wedding Reception")+"&dates="+f(WEDDING)+"/"+f(new Date(+WEDDING+4*36e5))+"&location="+encodeURIComponent("MCP Convention Centre, Irinjalakuda");
-try{new QRCode($("#qr"),{text:$("#mapLink").href,width:110,height:110,colorDark:"#3b2d26",colorLight:"#ffffff"})}catch(e){$("#qr").parentElement.style.display="none"}
-$$("#tl li").forEach(li=>li.onclick=()=>{const o=li.classList.contains("open");$$("#tl li").forEach(x=>x.classList.remove("open"));if(!o)li.classList.add("open")});
-const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.05});
-$$(".reveal").forEach(el=>io.observe(el));
-let att="yes",guests=1;
-$$(".choice").forEach(c=>c.onclick=()=>{att=c.dataset.att;$$(".choice").forEach(x=>x.setAttribute("aria-pressed",x===c));$("#gwrap").hidden=att==="no"});
-function draw(){$("#cnt").textContent=guests;$("#chips").innerHTML=Array.from({length:guests},(_,i)=>'<span class="chip">'+(i===0?"You":"Guest "+(i+1))+"</span>").join("");$("#gnWrap").hidden=guests<2}
-$("#minus").onclick=()=>{guests=Math.max(1,guests-1);draw()};
-$("#plus").onclick=()=>{guests=Math.min(10,guests+1);draw()};draw();
-$("#send").onclick=()=>{
- const name=$("#nm").value.trim(),msg=$("#ms").value.trim(),yes=att==="yes";
- if(!name){$("#e0").textContent="Please enter your name.";$("#nm").focus();return}
- const rec={name,attending:yes,guests:yes?guests:0,guestNames:$("#gn").value,message:msg,at:new Date().toISOString()};
- try{const all=JSON.parse(localStorage.getItem("rsvps")||"[]");all.push(rec);localStorage.setItem("rsvps",JSON.stringify(all))}catch(e){}
- const first=name.split(" ")[0];
- $("#doneT").textContent=yes?"See you there, "+first+"!":"We'll miss you, "+first;
- $("#doneP").textContent=yes?"Your reply for "+guests+(guests>1?" guests":" guest")+" is noted for 20 December 2026.":"Thank you for letting us know. You'll be in our duas.";
- if(msg){const w=document.createElement("div");w.className="wish";const b=document.createElement("b");b.textContent=name;w.append(b,document.createElement("br"),msg);$("#wall").prepend(w)}
- $("#form").hidden=true;$("#doneBox").hidden=false;if(yes)confetti();
+const WEDDING = new Date("2026-12-20T18:00:00+05:30");
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const prev = {};
+
+// Setup QR Code explicitly for the Powder theme colors
+const qrBox = $("#qr");
+if(qrBox) {
+    try {
+        new QRCode(qrBox, {
+            text: $("#mapLink").href,
+            width: 110,
+            height: 110,
+            colorDark: "#1e2f3d",
+            colorLight: "#ffffff"
+        });
+    } catch(e) {
+        qrBox.parentElement.style.display = "none";
+    }
+}
+
+function set(id, v) {
+    const el = $("#" + id), t = String(v).padStart(2, "0");
+    if (prev[id] !== t) {
+        el.textContent = t;
+        prev[id] = t;
+        const u = el.parentElement;
+        u.classList.remove("tick");
+        void u.offsetWidth;
+        u.classList.add("tick");
+    }
+}
+
+function tickCd() {
+    let diff = WEDDING - new Date();
+    if (diff <= 0) {
+        $("#cdTitle").textContent = "Alhamdulillah, they're married";
+        $("#cdSub").textContent = "Thank you for celebrating with us.";
+        diff = 0;
+    }
+    const S = Math.floor(diff / 1000);
+    set("d", Math.floor(S / 86400));
+    set("h", Math.floor(S % 86400 / 3600));
+    set("m", Math.floor(S % 3600 / 60));
+    set("s", S % 60);
+}
+
+// Initialize components
+tickCd();
+setInterval(tickCd, 1000);
+
+const f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+$("#cal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Faris & Nida's Wedding Reception") + "&dates=" + f(WEDDING) + "/" + f(new Date(+WEDDING + 4 * 36e5)) + "&location=" + encodeURIComponent("MCP Convention Centre, Irinjalakuda");
+
+$$("#tl li").forEach(li => li.onclick = () => {
+    const o = li.classList.contains("open");
+    $$("#tl li").forEach(x => x.classList.remove("open"));
+    if (!o) li.classList.add("open");
+});
+
+const io = new IntersectionObserver(e => e.forEach(x => {
+    if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); }
+}), { threshold: .05 });
+$$(".reveal").forEach(el => io.observe(el));
+
+let att = "yes", guests = 1;
+$$(".choice").forEach(c => c.onclick = () => {
+    att = c.dataset.att;
+    $$(".choice").forEach(x => x.setAttribute("aria-pressed", x === c));
+    $("#gwrap").hidden = att === "no";
+});
+
+function draw() {
+    $("#cnt").textContent = guests;
+    $("#chips").innerHTML = Array.from({length: guests}, (_, i) => '<span class="chip">' + (i === 0 ? "You" : "Guest " + (i + 1)) + "</span>").join("");
+    $("#gnWrap").hidden = guests < 2;
+}
+
+$("#minus").onclick = () => { guests = Math.max(1, guests - 1); draw(); };
+$("#plus").onclick = () => { guests = Math.min(10, guests + 1); draw(); };
+draw();
+
+$("#send").onclick = () => {
+    const name = $("#nm").value.trim(), msg = $("#ms").value.trim(), yes = att === "yes";
+    if (!name) { $("#e0").textContent = "Please enter your name."; $("#nm").focus(); return; }
+    
+    // In-memory saving
+    const first = name.split(" ")[0];
+    $("#doneT").textContent = yes ? "See you there, " + first + "!" : "We'll miss you, " + first;
+    $("#doneP").textContent = yes ? "Your reply for " + guests + (guests > 1 ? " guests" : " guest") + " is noted for 20 December 2026." : "Thank you for letting us know. You'll be in our duas.";
+    
+    if (msg) {
+        const w = document.createElement("div");
+        w.className = "wish";
+        const b = document.createElement("b");
+        b.textContent = name;
+        w.append(b, document.createElement("br"), msg);
+        $("#wall").prepend(w);
+    }
+    
+    $("#form").hidden = true;
+    $("#doneBox").hidden = false;
+    
+    if (yes) confetti();
 };
-function confetti(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
- const c=document.createElement("canvas");Object.assign(c.style,{position:"fixed",inset:0,zIndex:9,pointerEvents:"none"});c.width=innerWidth;c.height=innerHeight;document.body.append(c);
- const x=c.getContext("2d"),cols=["#a78d80","#c7af95","#c0b4a8","#3b2d26"];
- const p=Array.from({length:120},()=>({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:Math.random()*-14-2,r:Math.random()*6+3,c:cols[Math.random()*4|0],a:Math.random()*6}));
- let n=0;(function f(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.vy+=.3;q.x+=q.vx;q.y+=q.vy;q.a+=.2;x.fillStyle=q.c;x.save();x.translate(q.x,q.y);x.rotate(q.a);x.fillRect(-q.r,-q.r/2,q.r*2,q.r);x.restore()});if(++n<160)requestAnimationFrame(f);else c.remove()})();}
-(function(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
- const c=$("#petals"),x=c.getContext("2d");let W,H;const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};rs();addEventListener("resize",rs);
- const P=Array.from({length:22},()=>({x:Math.random()*W,y:Math.random()*H,s:Math.random()*7+4,v:Math.random()*.6+.3,d:Math.random()*2*Math.PI,r:Math.random()*6}));
- (function a(){x.clearRect(0,0,W,H);P.forEach(p=>{p.y+=p.v;p.d+=.012;p.x+=Math.sin(p.d)*.6;p.r+=.01;if(p.y>H+10){p.y=-10;p.x=Math.random()*W}
- x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="rgba(167,141,128,.45)";x.beginPath();x.ellipse(0,0,p.s,p.s/2,0,0,7);x.fill();x.restore()});requestAnimationFrame(a)})()})();
+
+function confetti() {
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const c = document.createElement("canvas");
+    Object.assign(c.style, { position: "fixed", inset: 0, zIndex: 9, pointerEvents: "none" });
+    c.width = innerWidth; c.height = innerHeight; document.body.append(c);
+    
+    const x = c.getContext("2d");
+    const cols = ["#7998b0", "#587a96", "#1e2f3d", "#d5e0e8"]; 
+    
+    const p = Array.from({length: 120}, () => ({
+        x: innerWidth / 2, y: innerHeight / 2, 
+        vx: (Math.random() - .5) * 16, vy: Math.random() * -14 - 2, 
+        r: Math.random() * 6 + 3, c: cols[Math.random() * 4 | 0], a: Math.random() * 6
+    }));
+    
+    let n = 0;
+    (function f() {
+        x.clearRect(0, 0, c.width, c.height);
+        p.forEach(q => {
+            q.vy += .3; q.x += q.vx; q.y += q.vy; q.a += .2;
+            x.fillStyle = q.c;
+            x.save(); x.translate(q.x, q.y); x.rotate(q.a);
+            x.fillRect(-q.r, -q.r / 2, q.r * 2, q.r);
+            x.restore();
+        });
+        if (++n < 160) requestAnimationFrame(f); else c.remove();
+    })();
+}
+
+(function() {
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const c = $("#petals"), x = c.getContext("2d");
+    let W, H;
+    const rs = () => { W = c.width = innerWidth; H = c.height = innerHeight; };
+    rs(); addEventListener("resize", rs);
+    
+    const P = Array.from({length: 22}, () => ({
+        x: Math.random() * W, y: Math.random() * H, 
+        s: Math.random() * 7 + 4, v: Math.random() * .6 + .3, 
+        d: Math.random() * 2 * Math.PI, r: Math.random() * 6
+    }));
+    
+    (function a() {
+        x.clearRect(0, 0, W, H);
+        P.forEach(p => {
+            p.y += p.v; p.d += .012; p.x += Math.sin(p.d) * .6; p.r += .01;
+            if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
+            x.save(); x.translate(p.x, p.y); x.rotate(p.r);
+            x.fillStyle = "rgba(219, 167, 197,0.8)"; 
+            x.beginPath(); x.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
+            x.fill(); x.restore();
+        });
+        requestAnimationFrame(a);
+    })();
+})();
 </script>
 </body>
 </html>
