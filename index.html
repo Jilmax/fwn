@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* Permanent Powder Theme */
+/* Permanent Powder Theme (Unified) */
 :root {
     --bg: #d5e0e8; 
     --ink: #1e2f3d; 
@@ -34,7 +34,6 @@ body {
     color: var(--ink); 
     font: 400 16px/1.7 Manrope, system-ui, sans-serif; 
     overflow-x: hidden; 
-    transition: background-color 0.8s ease, color 0.8s ease; 
 }
 h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400; margin: 0; line-height: 1.1; }
 a { color: var(--accent); transition: color 0.3s; }
@@ -45,7 +44,7 @@ nav {
     position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 5; 
     display: flex; justify-content: center; gap: 22px; padding: 0 14px; 
     background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); 
-    font-size: 14px; overflow-x: auto; white-space: nowrap; transition: background 0.8s ease, border-color 0.8s ease;
+    font-size: 14px; overflow-x: auto; white-space: nowrap; 
 }
 nav a { color: var(--ink); text-decoration: none; padding: 14px 4px; min-height: 44px; transition: 0.2s; }
 nav a:hover { text-decoration: underline; opacity: 0.8; }
@@ -53,15 +52,15 @@ nav a:hover { text-decoration: underline; opacity: 0.8; }
 .hero { 
     min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; 
     padding: 100px 20px 60px; background: radial-gradient(ellipse at 50% 35%, var(--hero-glow), var(--bg) 75%); 
-    position: relative; overflow: hidden; transition: background 0.8s ease; 
+    position: relative; overflow: hidden; 
 }
 .hero > div { position: relative; z-index: 1; }
 
 .orn { 
     position: absolute; width: clamp(120px, 30vw, 340px); aspect-ratio: 1; fill: none; 
-    stroke: var(--gold); stroke-width: 1.2; opacity: .2; pointer-events: none; 
+    stroke: var(--gold); stroke-width: 1.2; opacity: .4; pointer-events: none; 
     -webkit-mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 78%); 
-    mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 78%); transition: stroke 0.8s ease; 
+    mask-image: radial-gradient(circle at 0 0, #000 30%, transparent 78%); 
 }
 .orn.tl { top: 12px; left: 12px; }
 .orn.tr { top: 12px; right: 12px; transform: scaleX(-1); }
@@ -69,25 +68,28 @@ nav a:hover { text-decoration: underline; opacity: 0.8; }
 .orn.br { bottom: 12px; right: 12px; transform: scale(-1, -1); }
 
 .hero .bismi { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 18px; margin-bottom: 18px; }
+
+/* Italianno applied to main titles */
 .hero h1, footer h2 { font-family: "Italianno", cursive; font-weight: 400; }
 .hero h1 { font-size: clamp(88px, 20vw, 198px); line-height: 1.05; }
-.hero h1 span { display: block; font-family: "Cormorant Garamond", serif; font-style: italic; margin: 0; color: var(--gold); font-size: .25em; transition: color 0.8s ease; }
+.hero h1 span { display: block; font-family: "Cormorant Garamond", serif; font-style: italic; margin: 0; color: var(--gold); font-size: .25em; }
+
 .hero p { color: var(--muted); margin: 22px auto 0; max-width: 34ch; }
 .date { font-family: "Cormorant Garamond", serif; font-size: 26px; margin-top: 26px; }
 
 section { padding: 90px 20px; max-width: 980px; margin: auto; }
 h2 { font-size: clamp(36px, 6vw, 58px); text-align: center; margin-bottom: 12px; }
-.sub { text-align: center; color: var(--muted); margin: 0 auto 44px; max-width: 52ch; transition: color 0.8s ease; }
+.sub { text-align: center; color: var(--muted); margin: 0 auto 44px; max-width: 52ch; }
 
 .count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 520px; margin: auto; }
-.unit { padding: 16px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); text-align: center; transition: all 0.8s ease; }
+.unit { padding: 16px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); backdrop-filter: blur(8px); text-align: center; }
 .unit b { display: block; font: 600 44px/1 "Cormorant Garamond", serif; font-variant-numeric: tabular-nums; }
 .unit.tick b { animation: tick .35s ease; }
 @keyframes tick { 0% { transform: translateY(-8px); opacity: .3; } 100% { transform: none; opacity: 1; } }
 .unit small { color: var(--muted); font-size: 13px; }
 
 .couple { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-.person { padding: 32px; border: 1px solid var(--line); border-radius: 22px 22px 80px 22px; background: var(--card); transition: all 0.8s ease; }
+.person { padding: 32px; border: 1px solid var(--line); border-radius: 22px 22px 80px 22px; background: var(--card); backdrop-filter: blur(8px); }
 .person:nth-child(2) { border-radius: 22px 22px 22px 80px; }
 .person h3 { font-size: 34px; margin-bottom: 8px; }
 .person p { margin: 6px 0; color: var(--muted); }
@@ -95,10 +97,10 @@ h2 { font-size: clamp(36px, 6vw, 58px); text-align: center; margin-bottom: 12px;
 .venue { max-width: none; }
 .venue > div { max-width: 980px; margin: auto; }
 .vgrid { display: grid; grid-template-columns: 1fr; max-width: 640px; margin: auto; }
-.box { padding: 30px; border: 1px solid var(--gold); border-radius: 18px; background: var(--card); transition: all 0.8s ease; }
+.box { padding: 30px; border: 1px solid var(--gold); border-radius: 18px; background: var(--card); backdrop-filter: blur(8px); }
 .box h3 { font-size: 30px; margin-bottom: 8px; }
 
-.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--gold); transition: border-color 0.8s ease; }
+.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--gold); }
 .timeline li { padding: 0 0 26px 26px; position: relative; cursor: pointer; }
 .timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); transition: 0.3s; }
 .timeline li.open::before { background: var(--accent); transform: scale(1.4); }
@@ -112,9 +114,9 @@ h2 { font-size: clamp(36px, 6vw, 58px); text-align: center; margin-bottom: 12px;
 .btn.solid { background: var(--accent); color: var(--bg); }
 .btn.solid:hover { opacity: .85; }
 
-.rsvp { max-width: 640px; margin: auto; border: 1px solid var(--line); border-radius: 26px; background: var(--card); padding: 34px 30px; transition: all 0.8s ease; }
+.rsvp { max-width: 640px; margin: auto; border: 1px solid var(--line); border-radius: 26px; background: var(--card); backdrop-filter: blur(8px); padding: 34px 30px; }
 @keyframes in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-label.f { display: block; font-size: 14px; color: var(--muted); margin: 14px 0 6px; transition: color 0.8s ease; }
+label.f { display: block; font-size: 14px; color: var(--muted); margin: 14px 0 6px; }
 
 input[type=text], textarea { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--input-bg); color: var(--ink); font: inherit; font-size: 16px; transition: all 0.3s; }
 input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -131,7 +133,7 @@ input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2p
 .stepper output { font: 600 64px/1 "Cormorant Garamond", serif; min-width: 70px; text-align: center; }
 
 .chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; min-height: 34px; }
-.chip { padding: 4px 14px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); font-size: 14px; animation: in .3s; transition: all 0.8s ease; }
+.chip { padding: 4px 14px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); font-size: 14px; animation: in .3s; }
 
 .nav { display: flex; margin-top: 26px; }
 .err { color: #e57373; font-size: 14px; min-height: 20px; margin-top: 8px; }
@@ -139,7 +141,7 @@ input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2p
 .done h3 { font-size: 40px; color: var(--gold); }
 
 .wall { display: grid; gap: 14px; max-width: 640px; margin: 26px auto 0; }
-.wish { padding: 16px 20px; border-left: 3px solid var(--gold); background: var(--card); border-radius: 0 14px 14px 0; animation: in .4s; overflow-wrap: anywhere; transition: all 0.8s ease; }
+.wish { padding: 16px 20px; border-left: 3px solid var(--gold); background: var(--card); border-radius: 0 14px 14px 0; animation: in .4s; overflow-wrap: anywhere; }
 
 footer { text-align: center; padding: 60px 20px 90px; color: var(--ink); }
 footer h2 { font-size: 64px; }
@@ -150,10 +152,41 @@ footer h2 { font-size: 64px; }
 .quote .ref { color: var(--muted); font-size: 14px; margin: 0; }
 
 .qr { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
-.qr-box { background: #fff; padding: 8px; border-radius: 12px; line-height: 0; }
+.qr-box { background: rgba(255,255,255,0.7); padding: 8px; border-radius: 12px; line-height: 0; }
 .qr small { font-size: 13px; color: var(--muted); max-width: 14ch; line-height: 1.4; display: block; text-align: left; }
+
 .reveal { opacity: 0; transform: translateY(14px); transition: 1s; }
 .reveal.in { opacity: 1; transform: none; }
+
+/* Floating Music Button Styling */
+.music-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    color: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.music-btn:hover { background: var(--accent); color: var(--bg); transform: scale(1.05); }
+.music-btn svg { width: 24px; height: 24px; fill: currentColor; }
+.music-btn.playing { animation: pulse 2s infinite; }
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(88, 122, 150, 0.4); }
+    70% { box-shadow: 0 0 0 12px rgba(88, 122, 150, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(88, 122, 150, 0); }
+}
 
 @media(max-width: 680px) {
     section { padding: 60px 18px; }
@@ -170,6 +203,7 @@ footer h2 { font-size: 64px; }
     .qr .btn { flex: 0 0 auto; }
     .nav .btn { width: 100%; }
     .sub { margin-bottom: 30px; }
+    .music-btn { bottom: 16px; right: 16px; width: 46px; height: 46px; }
 }
 @media(prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -179,6 +213,13 @@ footer h2 { font-size: 64px; }
 </style>
 </head>
 <body>
+
+<!-- Background Audio Element -->
+<audio id="bgMusic" loop>
+    <!-- We will reference bgm.mp3 here -->
+    <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
 <canvas id="petals" aria-hidden="true"></canvas>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -194,6 +235,13 @@ footer h2 { font-size: 64px; }
             <circle cx="98" cy="98" r="3" fill="var(--gold)"/>
             <circle cx="186" cy="10" r="2.5" fill="var(--gold)"/>
             <circle cx="10" cy="186" r="2.5" fill="var(--gold)"/>
+        </symbol>
+        <!-- Audio Icons -->
+        <symbol id="icon-play" viewBox="0 0 24 24">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
         </symbol>
     </defs>
 </svg>
@@ -356,10 +404,62 @@ footer h2 { font-size: 64px; }
     <p>Your presence and duas are the best gift.</p>
 </footer>
 
+<!-- Floating Music Button -->
+<button class="music-btn" id="musicBtn" aria-label="Play Music" title="Play Music">
+    <svg id="musicIcon"><use href="#icon-play"/></svg>
+</button>
+
 <!-- External Libs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
+// Music Player Logic
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+const musicIcon = document.getElementById('musicIcon');
+let isMusicPlaying = false;
+let isProcessing = false; // Prevents errors from double-clicking
+
+musicBtn.addEventListener('click', () => {
+    // If the browser is currently trying to play/load, ignore extra clicks
+    if (isProcessing) return; 
+
+    if (isMusicPlaying) {
+        bgMusic.pause();
+        musicIcon.innerHTML = '<use href="#icon-play"/>';
+        musicBtn.classList.remove('playing');
+        musicBtn.setAttribute('aria-label', 'Play Music');
+        isMusicPlaying = false;
+    } else {
+        isProcessing = true;
+        const playPromise = bgMusic.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Successfully started playing
+                musicIcon.innerHTML = '<use href="#icon-pause"/>';
+                musicBtn.classList.add('playing');
+                musicBtn.setAttribute('aria-label', 'Pause Music');
+                isMusicPlaying = true;
+            }).catch(err => {
+                // Playback failed (e.g. file missing or browser blocked it)
+                console.error("Audio playback failed:", err);
+                console.log("Please ensure bgm.mp3 is uploaded to the root of your GitHub repository.");
+            }).finally(() => {
+                // Done processing, allow clicks again
+                isProcessing = false; 
+            });
+        } else {
+            // Fallback for older browsers
+            musicIcon.innerHTML = '<use href="#icon-pause"/>';
+            musicBtn.classList.add('playing');
+            isMusicPlaying = true;
+            isProcessing = false;
+        }
+    }
+});
+
+// Setup Dates and Rest of logic
 const WEDDING = new Date("2026-12-20T18:00:00+05:30");
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -373,7 +473,7 @@ if(qrBox) {
             text: $("#mapLink").href,
             width: 110,
             height: 110,
-            colorDark: "#1e2f3d",
+            colorDark: "#1e2f3d", // Deep blue from theme
             colorLight: "#ffffff"
         });
     } catch(e) {
@@ -407,7 +507,6 @@ function tickCd() {
     set("s", S % 60);
 }
 
-// Initialize components
 tickCd();
 setInterval(tickCd, 1000);
 
@@ -514,7 +613,7 @@ function confetti() {
             p.y += p.v; p.d += .012; p.x += Math.sin(p.d) * .6; p.r += .01;
             if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
             x.save(); x.translate(p.x, p.y); x.rotate(p.r);
-            x.fillStyle = "rgba(219, 167, 197,0.8)"; 
+            x.fillStyle = "rgba(88,122,150,.5)"; 
             x.beginPath(); x.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
             x.fill(); x.restore();
         });
