@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Faris &amp; Nida — Wedding Reception</title>
 
+<meta name="theme-color" content="#d5e0e8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -21,12 +23,9 @@
     --hero-glow: #c6d5e0;
     --input-bg: rgba(255,255,255,.5); 
     --nav-bg: rgba(255,255,255,.6);
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
 * { box-sizing: border-box; }
 body { 
     margin: 0; 
@@ -38,7 +37,7 @@ body {
 h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400; margin: 0; line-height: 1.1; }
 a { color: var(--accent); transition: color 0.3s; }
 canvas#petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-main, header, footer, nav { position: relative; z-index: 1; }
+main, header, footer { position: relative; z-index: 1; }
 
 nav { 
     position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 5; 
@@ -106,6 +105,7 @@ h2 { font-size: clamp(36px, 6vw, 58px); text-align: center; margin-bottom: 12px;
 .timeline li.open::before { background: var(--accent); transform: scale(1.4); }
 .timeline h3 { font-size: 26px; }
 .timeline p { margin: 0; color: var(--muted); max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+.timeline li:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
 .timeline li.open p { max-height: 160px; }
 
 .btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
@@ -135,8 +135,8 @@ input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 2p
 .chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; min-height: 34px; }
 .chip { padding: 4px 14px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); font-size: 14px; animation: in .3s; }
 
-.nav { display: flex; margin-top: 26px; }
-.err { color: #e57373; font-size: 14px; min-height: 20px; margin-top: 8px; }
+.actions { display: flex; justify-content: center; margin-top: 26px; }
+.err { color: #b3443f; font-size: 14px; min-height: 20px; margin-top: 8px; }
 .done { text-align: center; animation: in .4s; }
 .done h3 { font-size: 40px; color: var(--gold); }
 
@@ -181,6 +181,8 @@ footer h2 { font-size: 64px; }
 .music-btn:hover { background: var(--accent); color: var(--bg); transform: scale(1.05); }
 .music-btn svg { width: 24px; height: 24px; fill: currentColor; }
 .music-btn.playing { animation: pulse 2s infinite; }
+.music-btn.unavailable { opacity: .45; }
+.dot { fill: var(--gold); stroke: none; }
 
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(88, 122, 150, 0.4); }
@@ -201,7 +203,7 @@ footer h2 { font-size: 64px; }
     .btns .btn { flex: 1 1 100%; }
     .qr { justify-content: flex-start; }
     .qr .btn { flex: 0 0 auto; }
-    .nav .btn { width: 100%; }
+    .actions .btn { width: 100%; }
     .sub { margin-bottom: 30px; }
     .music-btn { bottom: 16px; right: 16px; width: 46px; height: 46px; }
 }
@@ -214,9 +216,7 @@ footer h2 { font-size: 64px; }
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="bgm.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" src="bgm.mp3" loop preload="auto"></audio>
 
 <canvas id="petals" aria-hidden="true"></canvas>
 
@@ -229,16 +229,16 @@ footer h2 { font-size: 64px; }
             <path d="M34 34C34 90 62 120 98 104C124 92 118 56 92 62C76 66 78 90 94 88"/>
             <path d="M110 40C140 30 165 40 180 62M40 110C30 140 40 165 62 180"/>
             <path d="M120 34c10 10 24 12 36 4-6-12-22-16-36-4zM34 120c10 10 12 24 4 36-12-6-16-22-4-36z"/>
-            <circle cx="34" cy="34" r="4" fill="var(--gold)"/>
-            <circle cx="98" cy="98" r="3" fill="var(--gold)"/>
-            <circle cx="186" cy="10" r="2.5" fill="var(--gold)"/>
-            <circle cx="10" cy="186" r="2.5" fill="var(--gold)"/>
+            <circle class="dot" cx="34" cy="34" r="4"/>
+            <circle class="dot" cx="98" cy="98" r="3"/>
+            <circle class="dot" cx="186" cy="10" r="2.5"/>
+            <circle class="dot" cx="10" cy="186" r="2.5"/>
         </symbol>
-        <!-- Audio Icons -->
-        <symbol id="icon-play" viewBox="0 0 24 24">
+        <!-- Audio icons: muted = shown while paused, sound = shown while playing -->
+        <symbol id="icon-muted" viewBox="0 0 24 24">
             <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
         </symbol>
-        <symbol id="icon-pause" viewBox="0 0 24 24">
+        <symbol id="icon-sound" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
         </symbol>
     </defs>
@@ -333,7 +333,7 @@ footer h2 { font-size: 64px; }
                     <p>Irinjalakuda, Thrissur, Kerala</p>
                     <div class="qr">
                         <a class="btn solid" target="_blank" rel="noopener" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=MCP+Convention+Centre+Irinjalakuda">Open in Maps</a>
-                        <div class="qr-box" id="qr" aria-label="QR code for venue location"></div>
+                        <div class="qr-box" id="qr" role="img" aria-label="QR code for venue location"></div>
                         <small>Scan for directions</small>
                     </div>
                 </div>
@@ -347,7 +347,7 @@ footer h2 { font-size: 64px; }
         <div class="rsvp">
             <div id="form">
                 <label class="f" for="nm">Your name</label>
-                <input type="text" id="nm" autocomplete="name" placeholder="e.g. Ahmed Kabeer">
+                <input type="text" id="nm" maxlength="80" autocomplete="name" placeholder="e.g. Ahmed Kabeer">
                 <div class="err" id="e0" role="alert"></div>
                 
                 <div class="choices" style="margin-top:14px">
@@ -365,14 +365,14 @@ footer h2 { font-size: 64px; }
                     <div class="chips" id="chips"></div>
                     <div id="gnWrap" hidden>
                         <label class="f" for="gn">Names of your guests (optional)</label>
-                        <input type="text" id="gn" placeholder="e.g. Shifa, Adil">
+                        <input type="text" id="gn" maxlength="120" placeholder="e.g. Shifa, Adil">
                     </div>
                 </div>
                 
                 <label class="f" for="ms">A message for the couple (optional)</label>
                 <textarea id="ms" rows="3" maxlength="240" placeholder="Wishing you a lifetime of happiness…"></textarea>
                 
-                <div class="nav" style="justify-content:center">
+                <div class="actions">
                     <button type="button" class="btn solid" id="send">Send RSVP</button>
                 </div>
             </div>
@@ -403,8 +403,8 @@ footer h2 { font-size: 64px; }
 </footer>
 
 <!-- Floating Music Button -->
-<button class="music-btn" id="musicBtn" aria-label="Play Music" title="Play Music">
-    <svg id="musicIcon"><use href="#icon-play"/></svg>
+<button type="button" class="music-btn" id="musicBtn" aria-label="Play music" title="Play music" aria-pressed="false">
+    <svg id="musicIcon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-muted"/></svg>
 </button>
 
 <!-- External Libs -->
@@ -420,39 +420,46 @@ const prev = {};
 // --- 2. Music Player Logic ---
 const bgMusic = $("#bgMusic");
 const musicBtn = $("#musicBtn");
-const musicIcon = $("#musicIcon");
-let isMusicPlaying = false;
-let isProcessing = false; // Prevents errors from rapid clicking
+const musicUse = $("#musicIcon use");
+bgMusic.volume = 0.6;
+let userPaused = false;
 
-musicBtn.addEventListener('click', () => {
-    if (isProcessing) return; 
+// The UI always mirrors the real audio state (also covers phone calls, headphones unplugged, etc.)
+function renderMusic() {
+    const on = !bgMusic.paused;
+    const label = on ? "Pause music" : "Play music";
+    musicUse.setAttribute("href", on ? "#icon-sound" : "#icon-muted");
+    musicBtn.classList.toggle("playing", on);
+    musicBtn.setAttribute("aria-pressed", on);
+    musicBtn.setAttribute("aria-label", label);
+    musicBtn.title = label;
+}
+bgMusic.addEventListener("play", renderMusic);
+bgMusic.addEventListener("pause", renderMusic);
+bgMusic.addEventListener("error", () => {
+    musicBtn.classList.add("unavailable");
+    musicBtn.title = "Music could not be loaded";
+    console.error("bgm.mp3 failed to load. Keep it in the same folder as this HTML file and on the same web host.");
+});
 
-    if (isMusicPlaying) {
-        bgMusic.pause();
-        musicIcon.innerHTML = '<use href="#icon-play"/>';
-        musicBtn.classList.remove('playing');
-        musicBtn.setAttribute('aria-label', 'Play Music');
-        isMusicPlaying = false;
+musicBtn.addEventListener("click", () => {
+    if (bgMusic.paused) {
+        userPaused = false;
+        bgMusic.play().catch(err => console.warn("Music could not start:", err));
     } else {
-        isProcessing = true;
-        const playPromise = bgMusic.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                // Successfully started playing
-                musicIcon.innerHTML = '<use href="#icon-pause"/>';
-                musicBtn.classList.add('playing');
-                musicBtn.setAttribute('aria-label', 'Pause Music');
-                isMusicPlaying = true;
-            }).catch(error => {
-                // Audio playback failed (e.g., file not found yet)
-                console.log("Audio playback failed:", error);
-            }).finally(() => {
-                isProcessing = false;
-            });
-        }
+        userPaused = true;
+        bgMusic.pause();
     }
 });
+
+// Browsers block autoplay, so start the music on the guest's first tap, click or key press
+// (unless they already paused it themselves). Delete this block if you prefer it to be opt-in only.
+bgMusic.play().catch(() => {});
+["click", "touchend", "keydown"].forEach(ev =>
+    document.addEventListener(ev, () => {
+        if (bgMusic.paused && !userPaused) bgMusic.play().catch(() => {});
+    }, { once: true })
+);
 
 // --- 3. Countdown Timer ---
 function set(id, v) {
@@ -488,10 +495,17 @@ const f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
 $("#cal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Faris & Nida's Wedding Reception") + "&dates=" + f(WEDDING) + "/" + f(new Date(+WEDDING + 4 * 36e5)) + "&location=" + encodeURIComponent("MCP Convention Centre, Irinjalakuda");
 
 // --- 5. Timeline Logic ---
-$$("#tl li").forEach(li => li.onclick = () => {
-    const o = li.classList.contains("open");
-    $$("#tl li").forEach(x => x.classList.remove("open"));
-    if (!o) li.classList.add("open");
+$$("#tl li").forEach(li => {
+    const toggle = () => {
+        const wasOpen = li.classList.contains("open");
+        $$("#tl li").forEach(x => { x.classList.remove("open"); x.setAttribute("aria-expanded", "false"); });
+        if (!wasOpen) { li.classList.add("open"); li.setAttribute("aria-expanded", "true"); }
+    };
+    li.tabIndex = 0;
+    li.setAttribute("role", "button");
+    li.setAttribute("aria-expanded", li.classList.contains("open"));
+    li.addEventListener("click", toggle);
+    li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
 });
 
 // --- 6. Scroll Reveal Animations ---
@@ -518,26 +532,26 @@ $("#minus").onclick = () => { guests = Math.max(1, guests - 1); draw(); };
 $("#plus").onclick = () => { guests = Math.min(10, guests + 1); draw(); };
 draw();
 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiwWGRNbSjvxlylF7TY8L4KmTlZTVe5Mfl9yVmgtFf3LPdUk-TeKZEAtmO45mTeiVSqg/exec";
+$("#nm").addEventListener("input", () => { $("#e0").textContent = ""; });
+
 $("#send").onclick = () => {
     const name = $("#nm").value.trim(), msg = $("#ms").value.trim(), yes = att === "yes";
     if (!name) { $("#e0").textContent = "Please enter your name."; $("#nm").focus(); return; }
     
-    const rec = {name, attending: yes, guests: yes ? guests : 0, guestNames: $("#gn").value, message: msg};
-    
-    // Send the data to Google Sheets
-    // IMPORTANT: Make sure to paste your actual Google Script URL inside the quotes below!
-    const scriptURL = "YOUR_WEB_APP_URL_HERE"; 
-    
-    if (scriptURL !== "YOUR_WEB_APP_URL_HERE") {
-        fetch(scriptURL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(rec)
-        }).catch(error => console.error('Error!', error.message));
-    }
+    const rec = {
+        name, attending: yes, guests: yes ? guests : 0,
+        guestNames: yes && guests > 1 ? $("#gn").value.trim() : "",
+        message: msg
+    };
+
+    // Send the reply to Google Sheets (fire-and-forget; no-cors means the response can't be read)
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(rec)
+    }).catch(err => console.error("RSVP could not be sent:", err));
 
     const first = name.split(" ")[0];
     $("#doneT").textContent = yes ? "See you there, " + first + "!" : "We'll miss you, " + first;
@@ -559,7 +573,7 @@ $("#send").onclick = () => {
 
 // --- 8. QR Code Generation ---
 const qrBox = $("#qr");
-if(qrBox) {
+if (qrBox) {
     try {
         new QRCode(qrBox, {
             text: $("#mapLink").href,
@@ -569,7 +583,8 @@ if(qrBox) {
             colorLight: "#ffffff"
         });
     } catch(e) {
-        qrBox.parentElement.style.display = "none";
+        qrBox.style.display = "none";
+        qrBox.nextElementSibling.style.display = "none";
     }
 }
 
