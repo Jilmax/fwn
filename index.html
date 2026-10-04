@@ -452,14 +452,22 @@ musicBtn.addEventListener("click", () => {
     }
 });
 
-// Browsers block autoplay, so start the music on the guest's first tap, click or key press
-// (unless they already paused it themselves). Delete this block if you prefer it to be opt-in only.
-bgMusic.play().catch(() => {});
-["click", "touchend", "keydown"].forEach(ev =>
-    document.addEventListener(ev, () => {
-        if (bgMusic.paused && !userPaused) bgMusic.play().catch(() => {});
-    }, { once: true })
-);
+// Try to start the music as soon as the page loads. Browsers usually block this until the
+// visitor interacts, so if it is refused we retry on the very first tap, click or key press
+// (unless they already paused it themselves).
+function tryAutoplay() {
+    if (!bgMusic.paused || userPaused) return;
+    bgMusic.play().catch(() => {});
+}
+const unlockEvents = ["pointerdown", "pointerup", "touchend", "click", "keydown"];
+function onFirstGesture() {
+    tryAutoplay();
+    if (!bgMusic.paused) unlockEvents.forEach(ev => document.removeEventListener(ev, onFirstGesture));
+}
+unlockEvents.forEach(ev => document.addEventListener(ev, onFirstGesture));
+bgMusic.addEventListener("canplay", tryAutoplay, { once: true });
+addEventListener("load", tryAutoplay);
+tryAutoplay();
 
 // --- 3. Countdown Timer ---
 function set(id, v) {
@@ -637,7 +645,7 @@ function confetti() {
             p.y += p.v; p.d += .012; p.x += Math.sin(p.d) * .6; p.r += .01;
             if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
             x.save(); x.translate(p.x, p.y); x.rotate(p.r);
-            x.fillStyle = "rgba(88,122,150,.5)"; 
+            x.fillStyle = "rgba(219, 167, 198,.7)"; 
             x.beginPath(); x.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
             x.fill(); x.restore();
         });
