@@ -36,7 +36,8 @@ body {
 }
 h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400; margin: 0; line-height: 1.1; }
 a { color: var(--accent); transition: color 0.3s; }
-canvas#petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+/* Petals float in front of everything; pointer-events:none keeps every tap and click working underneath */
+canvas#petals { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
 main, header, footer { position: relative; z-index: 1; }
 
 nav { 
@@ -600,7 +601,7 @@ if (qrBox) {
 function confetti() {
     if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
     const c = document.createElement("canvas");
-    Object.assign(c.style, { position: "fixed", inset: 0, zIndex: 9, pointerEvents: "none" });
+    Object.assign(c.style, { position: "fixed", inset: 0, zIndex: 101, pointerEvents: "none" });
     c.width = innerWidth; c.height = innerHeight; document.body.append(c);
     
     const x = c.getContext("2d");
@@ -645,7 +646,7 @@ function confetti() {
             p.y += p.v; p.d += .012; p.x += Math.sin(p.d) * .6; p.r += .01;
             if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
             x.save(); x.translate(p.x, p.y); x.rotate(p.r);
-            x.fillStyle = "rgba(176, 123, 156,.7)"; 
+            x.fillStyle = "rgba(176, 123, 156,.5)"; 
             x.beginPath(); x.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
             x.fill(); x.restore();
         });
