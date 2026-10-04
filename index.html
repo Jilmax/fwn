@@ -440,30 +440,31 @@ musicBtn.addEventListener('click', () => {
                 musicIcon.innerHTML = '<use href="#icon-pause"/>';
                 musicBtn.classList.add('playing');
                 musicBtn.setAttribute('aria-label', 'Pause Music');
-                isMusicPlaying = true;
-            }).catch(err => {
-                // Playback failed (e.g. file missing or browser blocked it)
-                console.error("Audio playback failed:", err);
-                console.log("Please ensure bgm.mp3 is uploaded to the root of your GitHub repository.");
-            }).finally(() => {
-                // Done processing, allow clicks again
-                isProcessing = false; 
-            });
-        } else {
-            // Fallback for older browsers
-            musicIcon.innerHTML = '<use href="#icon-pause"/>';
-            musicBtn.classList.add('playing');
-            isMusicPlaying = true;
-            isProcessing = false;
-        }
-    }
-});
+$("#send").onclick=()=>{
+ const name=$("#nm").value.trim(),msg=$("#ms").value.trim(),yes=att==="yes";
+ if(!name){$("#e0").textContent="Please enter your name.";$("#nm").focus();return}
+ 
+ // Build the record payload
+ const rec={name,attending:yes,guests:yes?guests:0,guestNames:$("#gn").value,message:msg};
+ 
+ // Send the data to Google Sheets
+ const scriptURL = "https://script.google.com/macros/s/AKfycbyiwWGRNbSjvxlylF7TY8L4KmTlZTVe5Mfl9yVmgtFf3LPdUk-TeKZEAtmO45mTeiVSqg/exec"; // <-- PASTE YOUR GOOGLE SCRIPT URL HERE
+ 
+ fetch(scriptURL, {
+    method: "POST",
+    mode: "no-cors", // Bypasses cross-origin restrictions for simple form submits
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(rec)
+ }).catch(error => console.error('Error!', error.message));
 
-// Setup Dates and Rest of logic
-const WEDDING = new Date("2026-12-20T18:00:00+05:30");
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const prev = {};
+ const first=name.split(" ")[0];
+ $("#doneT").textContent=yes?"See you there, "+first+"!":"We'll miss you, "+first;
+ $("#doneP").textContent=yes?"Your reply for "+guests+(guests>1?" guests":" guest")+" is noted for 20 December 2026.":"Thank you for letting us know. You'll be in our duas.";
+ if(msg){const w=document.createElement("div");w.className="wish";const b=document.createElement("b");b.textContent=name;w.append(b,document.createElement("br"),msg);$("#wall").prepend(w)}
+ $("#form").hidden=true;$("#doneBox").hidden=false;if(yes)confetti();
+};
 
 // Setup QR Code explicitly for the Powder theme colors
 const qrBox = $("#qr");
