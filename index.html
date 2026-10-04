@@ -214,9 +214,7 @@ footer h2 { font-size: 64px; }
 </head>
 <body>
 
-<!-- Background Audio Element -->
 <audio id="bgMusic" loop>
-    <!-- We will reference bgm.mp3 here -->
     <source src="bgm.mp3" type="audio/mpeg">
 </audio>
 
@@ -413,15 +411,20 @@ footer h2 { font-size: 64px; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
-// Music Player Logic
-const bgMusic = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
-const musicIcon = document.getElementById('musicIcon');
+// --- 1. Global Setup & Variables ---
+const WEDDING = new Date("2026-12-20T18:00:00+05:30");
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const prev = {};
+
+// --- 2. Music Player Logic ---
+const bgMusic = $("#bgMusic");
+const musicBtn = $("#musicBtn");
+const musicIcon = $("#musicIcon");
 let isMusicPlaying = false;
-let isProcessing = false; // Prevents errors from double-clicking
+let isProcessing = false; // Prevents errors from rapid clicking
 
 musicBtn.addEventListener('click', () => {
-    // If the browser is currently trying to play/load, ignore extra clicks
     if (isProcessing) return; 
 
     if (isMusicPlaying) {
@@ -440,48 +443,18 @@ musicBtn.addEventListener('click', () => {
                 musicIcon.innerHTML = '<use href="#icon-pause"/>';
                 musicBtn.classList.add('playing');
                 musicBtn.setAttribute('aria-label', 'Pause Music');
-$("#send").onclick=()=>{
- const name=$("#nm").value.trim(),msg=$("#ms").value.trim(),yes=att==="yes";
- if(!name){$("#e0").textContent="Please enter your name.";$("#nm").focus();return}
- 
- // Build the record payload
- const rec={name,attending:yes,guests:yes?guests:0,guestNames:$("#gn").value,message:msg};
- 
- // Send the data to Google Sheets
- const scriptURL = "https://script.google.com/macros/s/AKfycbyiwWGRNbSjvxlylF7TY8L4KmTlZTVe5Mfl9yVmgtFf3LPdUk-TeKZEAtmO45mTeiVSqg/exec"; // <-- PASTE YOUR GOOGLE SCRIPT URL HERE
- 
- fetch(scriptURL, {
-    method: "POST",
-    mode: "no-cors", // Bypasses cross-origin restrictions for simple form submits
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(rec)
- }).catch(error => console.error('Error!', error.message));
-
- const first=name.split(" ")[0];
- $("#doneT").textContent=yes?"See you there, "+first+"!":"We'll miss you, "+first;
- $("#doneP").textContent=yes?"Your reply for "+guests+(guests>1?" guests":" guest")+" is noted for 20 December 2026.":"Thank you for letting us know. You'll be in our duas.";
- if(msg){const w=document.createElement("div");w.className="wish";const b=document.createElement("b");b.textContent=name;w.append(b,document.createElement("br"),msg);$("#wall").prepend(w)}
- $("#form").hidden=true;$("#doneBox").hidden=false;if(yes)confetti();
-};
-
-// Setup QR Code explicitly for the Powder theme colors
-const qrBox = $("#qr");
-if(qrBox) {
-    try {
-        new QRCode(qrBox, {
-            text: $("#mapLink").href,
-            width: 110,
-            height: 110,
-            colorDark: "#1e2f3d", // Deep blue from theme
-            colorLight: "#ffffff"
-        });
-    } catch(e) {
-        qrBox.parentElement.style.display = "none";
+                isMusicPlaying = true;
+            }).catch(error => {
+                // Audio playback failed (e.g., file not found yet)
+                console.log("Audio playback failed:", error);
+            }).finally(() => {
+                isProcessing = false;
+            });
+        }
     }
-}
+});
 
+// --- 3. Countdown Timer ---
 function set(id, v) {
     const el = $("#" + id), t = String(v).padStart(2, "0");
     if (prev[id] !== t) {
@@ -507,24 +480,27 @@ function tickCd() {
     set("m", Math.floor(S % 3600 / 60));
     set("s", S % 60);
 }
-
 tickCd();
 setInterval(tickCd, 1000);
 
+// --- 4. Add to Calendar link ---
 const f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
 $("#cal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Faris & Nida's Wedding Reception") + "&dates=" + f(WEDDING) + "/" + f(new Date(+WEDDING + 4 * 36e5)) + "&location=" + encodeURIComponent("MCP Convention Centre, Irinjalakuda");
 
+// --- 5. Timeline Logic ---
 $$("#tl li").forEach(li => li.onclick = () => {
     const o = li.classList.contains("open");
     $$("#tl li").forEach(x => x.classList.remove("open"));
     if (!o) li.classList.add("open");
 });
 
+// --- 6. Scroll Reveal Animations ---
 const io = new IntersectionObserver(e => e.forEach(x => {
     if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); }
 }), { threshold: .05 });
 $$(".reveal").forEach(el => io.observe(el));
 
+// --- 7. RSVP Form Logic ---
 let att = "yes", guests = 1;
 $$(".choice").forEach(c => c.onclick = () => {
     att = c.dataset.att;
@@ -546,7 +522,23 @@ $("#send").onclick = () => {
     const name = $("#nm").value.trim(), msg = $("#ms").value.trim(), yes = att === "yes";
     if (!name) { $("#e0").textContent = "Please enter your name."; $("#nm").focus(); return; }
     
-    // In-memory saving
+    const rec = {name, attending: yes, guests: yes ? guests : 0, guestNames: $("#gn").value, message: msg};
+    
+    // Send the data to Google Sheets
+    // IMPORTANT: Make sure to paste your actual Google Script URL inside the quotes below!
+    const scriptURL = "YOUR_WEB_APP_URL_HERE"; 
+    
+    if (scriptURL !== "YOUR_WEB_APP_URL_HERE") {
+        fetch(scriptURL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(rec)
+        }).catch(error => console.error('Error!', error.message));
+    }
+
     const first = name.split(" ")[0];
     $("#doneT").textContent = yes ? "See you there, " + first + "!" : "We'll miss you, " + first;
     $("#doneP").textContent = yes ? "Your reply for " + guests + (guests > 1 ? " guests" : " guest") + " is noted for 20 December 2026." : "Thank you for letting us know. You'll be in our duas.";
@@ -562,10 +554,26 @@ $("#send").onclick = () => {
     
     $("#form").hidden = true;
     $("#doneBox").hidden = false;
-    
     if (yes) confetti();
 };
 
+// --- 8. QR Code Generation ---
+const qrBox = $("#qr");
+if(qrBox) {
+    try {
+        new QRCode(qrBox, {
+            text: $("#mapLink").href,
+            width: 110,
+            height: 110,
+            colorDark: "#1e2f3d", // Deep blue from theme
+            colorLight: "#ffffff"
+        });
+    } catch(e) {
+        qrBox.parentElement.style.display = "none";
+    }
+}
+
+// --- 9. Confetti and Petal Effects ---
 function confetti() {
     if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
     const c = document.createElement("canvas");
