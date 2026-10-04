@@ -646,7 +646,7 @@ function confetti() {
             p.y += p.v; p.d += .012; p.x += Math.sin(p.d) * .6; p.r += .01;
             if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
             x.save(); x.translate(p.x, p.y); x.rotate(p.r);
-            x.fillStyle = "rgba(176, 123, 156,.5)"; 
+            x.fillStyle = "rgba(230, 184, 217,.7)"; 
             x.beginPath(); x.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
             x.fill(); x.restore();
         });
