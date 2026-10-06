@@ -15,7 +15,7 @@
 :root {
     --bg: #d5e0e8; 
     --ink: #1e2f3d; 
-    --muted: rgba(88,122,150,.5); 
+    --muted: rgba(88,122,150,1.0); 
     --gold: #7998b0; 
     --accent: #587a96; 
     --card: rgba(255,255,255,.45); 
@@ -51,10 +51,16 @@ nav a:hover { text-decoration: underline; opacity: 0.8; }
 
 .hero { 
     min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; 
-    padding: 100px 20px 60px; background: radial-gradient(ellipse at 50% 35%, var(--hero-glow), var(--bg) 75%); 
+    padding: 100px 20px 110px; background: radial-gradient(ellipse at 50% 35%, var(--hero-glow), var(--bg) 75%); 
     position: relative; overflow: hidden; 
 }
 .hero > div { position: relative; z-index: 1; }
+
+/* Scroll-down cue */
+.scroll-cue { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; transition: opacity .4s; }
+.scroll-cue svg { width: 28px; height: 28px; fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: cue 1.8s ease-in-out infinite; }
+.scroll-cue.gone { opacity: 0; pointer-events: none; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .45; } 50% { transform: translateY(9px); opacity: 1; } }
 
 .orn { 
     position: absolute; width: clamp(120px, 30vw, 340px); aspect-ratio: 1; fill: none; 
@@ -263,15 +269,16 @@ footer h2 { font-size: 64px; }
         <h1>Faris<span>&amp;</span>Nida</h1>
         <div class="date">Wedding reception<br>Sunday, 20 December 2026 · 6:00 PM</div>
         <p>MCP Convention Centre, Irinjalakuda</p>
-        <div class="btns" style="justify-content:center;margin-top:30px">
-            <a class="btn solid" href="#rsvp">RSVP now</a>
-            <a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a>
-        </div>
     </div>
+
+    <a class="scroll-cue" id="cue" href="#verse" aria-label="Scroll down to continue">
+        <span>Scroll down</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5l6 6 6-6"/><path d="M6 12l6 6 6-6"/></svg>
+    </a>
 </header>
 
 <main>
-    <section class="quote reveal" aria-label="Quran verse">
+    <section class="quote reveal" id="verse" aria-label="Quran verse">
         <p class="ar" lang="ar" dir="rtl">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
         <p class="en">And among His signs is that He created for you spouses from among yourselves, that you may find comfort in them, and He placed between you affection and mercy.</p>
         <p class="ref">Surah Ar-Rum (30:21)</p>
@@ -285,6 +292,9 @@ footer h2 { font-size: 64px; }
             <div class="unit"><b id="h">00</b><small>hours</small></div>
             <div class="unit"><b id="m">00</b><small>minutes</small></div>
             <div class="unit"><b id="s">00</b><small>seconds</small></div>
+        </div>
+        <div class="actions">
+            <a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a>
         </div>
     </section>
 
@@ -392,7 +402,6 @@ footer h2 { font-size: 64px; }
         <h2>Wishes for the couple</h2>
         <p class="sub">Messages from family and friends appear here.</p>
         <div class="wall" id="wall">
-            <div class="wish"><b>Faris's family</b><br>Alhamdulillah. Welcome to our family, Nida.</div>
         </div>
     </section>
 </main>
@@ -498,6 +507,12 @@ function tickCd() {
 }
 tickCd();
 setInterval(tickCd, 1000);
+
+// --- Scroll cue: fades out once the guest starts scrolling ---
+const cue = $("#cue");
+const syncCue = () => cue.classList.toggle("gone", scrollY > 40);
+addEventListener("scroll", syncCue, { passive: true });
+syncCue();
 
 // --- 4. Add to Calendar link ---
 const f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
