@@ -294,7 +294,7 @@ footer h2 { font-size: 64px; }
             <div class="unit"><b id="s">00</b><small>seconds</small></div>
         </div>
         <div class="actions">
-            <a class="btn" id="cal" target="_blank" rel="noopener" href="#">Add to calendar</a>
+            <a class="btn" id="cal" role="button" href="#">Add to calendar</a>
         </div>
     </section>
 
@@ -514,9 +514,44 @@ const syncCue = () => cue.classList.toggle("gone", scrollY > 40);
 addEventListener("scroll", syncCue, { passive: true });
 syncCue();
 
-// --- 4. Add to Calendar link ---
-const f = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
-$("#cal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Faris & Nida's Wedding Reception") + "&dates=" + f(WEDDING) + "/" + f(new Date(+WEDDING + 4 * 36e5)) + "&location=" + encodeURIComponent("MCP Convention Centre, Irinjalakuda");
+// --- 4. Add to Calendar: downloads an .ics file, which opens in the device's own calendar app ---
+const icsDate = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+const icsText = t => t.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+const icsFold = l => l.match(/.{1,73}/g).join("\r\n ");   // iCalendar lines must be 75 characters or fewer
+
+function buildICS() {
+    return [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Faris and Nida Wedding//EN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        "UID:faris-nida-reception-20261220@wedding-invitation",
+        "DTSTAMP:" + icsDate(new Date()),
+        "DTSTART:" + icsDate(WEDDING),                          // stored in UTC; each device shows its own local time
+        "DTEND:" + icsDate(new Date(+WEDDING + 4 * 36e5)),      // 4 hours
+        "SUMMARY:" + icsText("Faris & Nida's Wedding Reception"),
+        "LOCATION:" + icsText("MCP Convention Centre, Irinjalakuda, Thrissur, Kerala"),
+        "DESCRIPTION:" + icsText("Wedding reception of Mohammed Faris & Nida Haris.\nGuests are welcomed from 6:00 PM."),
+        "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:Wedding reception tomorrow", "END:VALARM",
+        "BEGIN:VALARM", "TRIGGER:-PT3H", "ACTION:DISPLAY", "DESCRIPTION:Wedding reception today at 6:00 PM", "END:VALARM",
+        "END:VEVENT",
+        "END:VCALENDAR"
+    ].map(icsFold).join("\r\n") + "\r\n";
+}
+
+$("#cal").addEventListener("click", e => {
+    e.preventDefault();
+    const url = URL.createObjectURL(new Blob([buildICS()], { type: "text/calendar;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Faris-and-Nida-wedding.ics";
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+});
 
 // --- 5. Timeline Logic ---
 $$("#tl li").forEach(li => {
