@@ -401,15 +401,15 @@ footer h2 { font-size: 64px; }
     <section id="wishes" class="reveal">
         <h2>Wishes for the couple</h2>
         <p class="sub">Messages from family and friends appear here.</p>
-        <div class="wall" id="wall">
-        </div>
+        <div class="wall" id="wall"></div>
+        <p class="sub" id="wallEmpty" style="margin:26px 0 0">Be the first to leave a wish for the couple.</p>
     </section>
 </main>
 
 <footer>
     <h2>Faris &amp; Nida</h2>
     <p>20 December 2026 · 6:00 PM · MCP Convention Centre, Irinjalakuda</p>
-    <p>Your presence and prayers are the best gift.</p>
+    <p>Your presence and duas are the best gift.</p>
 </footer>
 
 <!-- Floating Music Button -->
@@ -557,6 +557,22 @@ $("#plus").onclick = () => { guests = Math.min(10, guests + 1); draw(); };
 draw();
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiwWGRNbSjvxlylF7TY8L4KmTlZTVe5Mfl9yVmgtFf3LPdUk-TeKZEAtmO45mTeiVSqg/exec";
+// --- Shared wish wall: wishes live in the Google Sheet and are loaded for every visitor ---
+function addWish(name, msg, atTop) {
+    const w = document.createElement("div");
+    w.className = "wish";
+    const b = document.createElement("b");
+    b.textContent = name;
+    w.append(b, document.createElement("br"), msg);   // textContent only: guests can't inject HTML
+    $("#wall")[atTop ? "prepend" : "append"](w);
+    $("#wallEmpty").hidden = true;
+}
+
+fetch(SCRIPT_URL + "?action=wishes")
+    .then(r => r.json())
+    .then(d => (d.wishes || []).forEach(w => addWish(String(w.name), String(w.message), false)))
+    .catch(err => console.warn("Wishes could not be loaded:", err));
+
 $("#nm").addEventListener("input", () => { $("#e0").textContent = ""; });
 
 $("#send").onclick = () => {
@@ -581,14 +597,7 @@ $("#send").onclick = () => {
     $("#doneT").textContent = yes ? "See you there, " + first + "!" : "We'll miss you, " + first;
     $("#doneP").textContent = yes ? "Your reply for " + guests + (guests > 1 ? " guests" : " guest") + " is noted for 20 December 2026." : "Thank you for letting us know. You'll be in our duas.";
     
-    if (msg) {
-        const w = document.createElement("div");
-        w.className = "wish";
-        const b = document.createElement("b");
-        b.textContent = name;
-        w.append(b, document.createElement("br"), msg);
-        $("#wall").prepend(w);
-    }
+    if (msg) addWish(name, msg, true);   // show it instantly; it is also saved to the sheet above
     
     $("#form").hidden = true;
     $("#doneBox").hidden = false;
